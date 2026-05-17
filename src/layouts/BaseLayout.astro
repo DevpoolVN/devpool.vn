@@ -1,0 +1,102 @@
+---
+import '@/styles/global.css'
+
+import { SEO } from 'astro-seo'
+import { ClientRouter } from 'astro:transitions'
+
+import { SITE } from '@/config/site'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image = '/og-default.png',
+} = Astro.props
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.title} RSS feed`}
+      href="/rss.xml"
+    />
+
+    <SEO
+      title={fullTitle}
+      description={description}
+      canonical={canonicalURL.toString()}
+      openGraph={{
+        basic: {
+          title: fullTitle,
+          type: 'website',
+          image: image,
+        },
+        optional: {
+          description: description,
+          siteName: SITE.title,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: fullTitle,
+        description: description,
+        image: image,
+      }}
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <ClientRouter />
+
+    {/* No-FOUC theme bootstrap — sets the html class before paint */}
+    <script is:inline>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = stored === 'dark' || (!stored && prefersDark)
+          if (dark) document.documentElement.classList.add('dark')
+        } catch (e) {
+          /* noop */
+        }
+      })()
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <slot />
+    {/* Re-apply theme after view transition swaps — html element is reused but be safe */}
+    <script is:inline>
+      document.addEventListener('astro:after-swap', function () {
+        try {
+          var stored = localStorage.getItem('theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = stored === 'dark' || (!stored && prefersDark)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {
+          /* noop */
+        }
+      })
+    </script>
+  </body>
+</html>

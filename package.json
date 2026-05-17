@@ -1,0 +1,50 @@
+{
+  "name": "astrolabe",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Astrolabe — a simple, lightweight markdown blog built with Astro and TailwindCSS",
+  "overrides": {
+    "rolldown-vite": "npm:vite@^7",
+    "vite": "^7"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --ext .ts,.astro",
+    "lint:fix": "eslint . --ext .ts,.astro --fix",
+    "type-check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "@iconify-json/lucide": "^1.2.108",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.3.3",
+    "astro-icon": "^1.1.5",
+    "astro-seo": "^1.1.0",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2",
+    "@eslint/js": "^10",
+    "@tailwindcss/typography": "^0.5.19",
+    "@typescript-eslint/eslint-plugin": "^8",
+    "@typescript-eslint/parser": "^8",
+    "eslint": "^10",
+    "eslint-config-prettier": "^10",
+    "eslint-plugin-astro": "^1",
+    "eslint-plugin-prettier": "^5",
+    "eslint-plugin-simple-import-sort": "^13",
+    "globals": "^17",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-sort-json": "^4.2.0",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "typescript": "^6"
+  }
+}

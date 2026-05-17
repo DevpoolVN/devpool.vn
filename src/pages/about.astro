@@ -1,0 +1,40 @@
+---
+import AuthorCard from '@/components/molecules/AuthorCard.astro'
+import { SITE } from '@/config/site'
+import { getAuthor } from '@/data/authors'
+import PageLayout from '@/layouts/PageLayout.astro'
+
+const author = getAuthor(SITE.defaultAuthor)
+---
+
+<PageLayout title="About" description={`About ${SITE.title}`}>
+  <section class="page-section">
+    <div class="max-w-4xl">
+      <h1 class="heading-1 mb-12">About</h1>
+
+      <div class="prose prose-lg max-w-none">
+        <p>
+          This is a sample about page. Replace this content with a short introduction to your site,
+          your work, or yourself.
+        </p>
+        <p>
+          Pages live in <code>src/pages/</code>. Add a new <code>.astro</code> file and it becomes a
+          route automatically.
+        </p>
+      </div>
+
+      <div class="border-border mt-12 border-t pt-12">
+        <h2 class="heading-2 mb-8">The author</h2>
+        <AuthorCard author={author} variant="full" />
+        <p class="mt-6 text-center md:text-left">
+          <a
+            href={`/authors/${author.slug}/`}
+            class="text-accent hover:text-accent-dark font-medium"
+          >
+            View full profile →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+</PageLayout>

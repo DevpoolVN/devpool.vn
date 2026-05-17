@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content'
+
+import AuthorCard from '@/components/molecules/AuthorCard.astro'
+import BlogCard from '@/components/molecules/BlogCard.astro'
+import Icon from '@/components/atoms/Icon.astro'
+import JsonLD from '@/components/utilities/JsonLD.astro'
+import { SITE } from '@/config/site'
+import { type Author, getAllAuthors } from '@/data/authors'
+import PageLayout from '@/layouts/PageLayout.astro'
+
+export async function getStaticPaths() {
+  return getAllAuthors().map((author) => ({
+    params: { slug: author.slug },
+    props: { author },
+  }))
+}
+
+type Props = { author: Author }
+const { author } = Astro.props
+
+const posts = await getCollection('blog', ({ data }) => !data.draft && data.author === author.slug)
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+
+const personGraph = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${SITE.url}/authors/${author.slug}/#person`,
+  name: author.name,
+  ...(author.role && { jobTitle: author.role }),
+  description: author.bio,
+  url: `${SITE.url}/authors/${author.slug}/`,
+  ...(author.links.length > 0 && {
+    sameAs: author.links.filter((l) => l.href.startsWith('http')).map((l) => l.href),
+  }),
+}
+---
+
+<PageLayout title={author.name} description={author.bio}>
+  <JsonLD data={personGraph} />
+
+  <section class="page-section">
+    <div class="max-w-4xl">
+      <AuthorCard author={author} variant="full" />
+
+    {/* Projects */}
+    {
+      author.projects.length > 0 && (
+        <div class="mt-16">
+          <h2 class="mb-6 heading-2">Projects</h2>
+          <ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {author.projects.map((p) => (
+              <li>
+                {p.href ? (
+                  <a
+                    href={p.href}
+                    target={p.href.startsWith('http') ? '_blank' : undefined}
+                    rel={p.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    class="border-border hover:border-accent group flex h-full flex-col rounded-2xl border p-5 transition-colors"
+                  >
+                    <p class="text-ink group-hover:text-accent mb-1 inline-flex items-center gap-1.5 font-semibold transition-colors">
+                      {p.name}
+                      <Icon name="lucide:arrow-up-right" class="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                    </p>
+                    <p class="text-muted text-sm">{p.description}</p>
+                  </a>
+                ) : (
+                  <div class="border-border h-full rounded-2xl border p-5">
+                    <p class="text-ink mb-1 font-semibold">{p.name}</p>
+                    <p class="text-muted text-sm">{p.description}</p>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {/* Posts */}
+    {
+      sortedPosts.length > 0 && (
+        <div class="mt-16">
+          <h2 class="mb-6 heading-2">
+            Posts by {author.name}
+          </h2>
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {sortedPosts.map((post) => (
+              <BlogCard
+                title={post.data.title}
+                description={post.data.description}
+                href={`/blog/${post.id}/`}
+                date={post.data.pubDate}
+                authorSlug={post.data.author}
+                tags={post.data.tags}
+                image={post.data.image}
+              />
+            ))}
+          </div>
+        </div>
+      )
+    }
+    </div>
+  </section>
+</PageLayout>

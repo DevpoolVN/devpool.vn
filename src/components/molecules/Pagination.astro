@@ -1,0 +1,72 @@
+---
+interface Props {
+  currentPage: number
+  lastPage: number
+  prevUrl?: string
+  nextUrl?: string
+  baseUrl?: string
+}
+
+const { currentPage, lastPage, prevUrl, nextUrl, baseUrl = '/blog/' } = Astro.props
+
+function pageHref(n: number) {
+  return n === 1 ? baseUrl : `${baseUrl}${n}/`
+}
+
+const pages = Array.from({ length: lastPage }, (_, i) => i + 1)
+---
+
+{
+  lastPage > 1 && (
+    <nav class="mt-12 flex items-center justify-center gap-2" aria-label="Pagination">
+      <a
+        href={prevUrl}
+        aria-disabled={!prevUrl}
+        class:list={[
+          'border-border inline-flex h-10 items-center rounded-full border px-4 text-sm font-medium transition-colors',
+          prevUrl
+            ? 'text-ink hover:bg-surface-alt'
+            : 'text-muted pointer-events-none opacity-50',
+        ]}
+      >
+        ← Previous
+      </a>
+
+      <ul class="hidden items-center gap-1 md:flex">
+        {pages.map((p) => (
+          <li>
+            <a
+              href={pageHref(p)}
+              aria-current={p === currentPage ? 'page' : undefined}
+              class:list={[
+                'inline-flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium transition-colors',
+                p === currentPage
+                  ? 'bg-ink text-surface'
+                  : 'text-ink hover:bg-surface-alt',
+              ]}
+            >
+              {p}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <span class="text-muted text-sm md:hidden">
+        Page {currentPage} of {lastPage}
+      </span>
+
+      <a
+        href={nextUrl}
+        aria-disabled={!nextUrl}
+        class:list={[
+          'border-border inline-flex h-10 items-center rounded-full border px-4 text-sm font-medium transition-colors',
+          nextUrl
+            ? 'text-ink hover:bg-surface-alt'
+            : 'text-muted pointer-events-none opacity-50',
+        ]}
+      >
+        Next →
+      </a>
+    </nav>
+  )
+}

@@ -1,0 +1,234 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content'
+
+import AuthorCard from '@/components/molecules/AuthorCard.astro'
+import BlogCard from '@/components/molecules/BlogCard.astro'
+import BlogContent from '@/components/molecules/BlogContent.astro'
+import TableOfContents from '@/components/molecules/TableOfContents.astro'
+import JsonLD from '@/components/utilities/JsonLD.astro'
+import { SITE } from '@/config/site'
+import { getAuthor } from '@/data/authors'
+import { slugify } from '@/lib/slug'
+import PageLayout from '@/layouts/PageLayout.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft)
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }))
+}
+
+type Props = {
+  post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+const { Content, headings } = await render(post)
+const author = getAuthor(post.data.author)
+
+const formattedDate = post.data.pubDate.toLocaleDateString('en', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
+
+const wordCount = post.body?.split(/\s+/).length || 0
+const readingTime = Math.max(1, Math.ceil(wordCount / 200))
+
+// Related + prev/next
+const allPosts = await getCollection('blog', ({ data }) => !data.draft)
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+const currentIndex = sortedPosts.findIndex((p) => p.id === post.id)
+const prevPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null
+const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null
+
+const relatedByTag = sortedPosts
+  .filter((p) => p.id !== post.id && p.data.tags.some((t) => post.data.tags.includes(t)))
+  .slice(0, 3)
+const relatedFallback = sortedPosts.filter((p) => p.id !== post.id).slice(0, 3)
+const related = relatedByTag.length > 0 ? relatedByTag : relatedFallback
+
+// JSON-LD semantic graph
+const postUrl = new URL(`/blog/${post.id}/`, SITE.url).toString()
+const personId = `${SITE.url}/authors/${author.slug}/#person`
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BlogPosting',
+      '@id': `${postUrl}#article`,
+      headline: post.data.title,
+      description: post.data.description,
+      datePublished: post.data.pubDate.toISOString(),
+      ...(post.data.updatedDate && { dateModified: post.data.updatedDate.toISOString() }),
+      author: { '@id': personId },
+      keywords: post.data.tags.join(', '),
+      ...(post.data.image && { image: new URL(post.data.image, SITE.url).toString() }),
+      mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+      wordCount,
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: author.name,
+      ...(author.role && { jobTitle: author.role }),
+      description: author.bio,
+      url: `${SITE.url}/authors/${author.slug}/`,
+      ...(author.links.length > 0 && {
+        sameAs: author.links
+          .filter((l) => l.href.startsWith('http'))
+          .map((l) => l.href),
+      }),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE.url + '/blog/' },
+        { '@type': 'ListItem', position: 3, name: post.data.title, item: postUrl },
+      ],
+    },
+  ],
+}
+---
+
+<PageLayout title={post.data.title} description={post.data.description} image={post.data.image}>
+  <JsonLD data={graph} />
+
+  <article class="page-section">
+    {/* Header */}
+    <header class="mx-auto mb-12 max-w-3xl text-center">
+      {
+        post.data.tags.length > 0 && (
+          <a
+            href={`/blog/tags/${slugify(post.data.tags[0])}/`}
+            class="text-accent mb-4 inline-block text-sm font-semibold tracking-wider uppercase"
+          >
+            {post.data.tags[0]}
+          </a>
+        )
+      }
+
+      <h1 class="heading-1 mb-6 leading-tight">
+        {post.data.title}
+      </h1>
+
+      <p class="text-muted mb-6 text-lg md:text-xl">
+        {post.data.description}
+      </p>
+
+      <div class="text-muted flex flex-wrap items-center justify-center gap-3 text-sm">
+        <a href={`/authors/${author.slug}/`} class="hover:text-accent">
+          {author.name}
+        </a>
+        <span>·</span>
+        <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
+        <span>·</span>
+        <span>{readingTime} min read</span>
+      </div>
+    </header>
+
+    {
+      post.data.image && (
+        <img
+          src={post.data.image}
+          alt={post.data.title}
+          class="mx-auto mb-12 aspect-16/9 w-full max-w-4xl rounded-2xl object-cover"
+        />
+      )
+    }
+
+    {/* TOC + body grid */}
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[1fr_240px] lg:gap-16">
+      <div class="mx-auto w-full max-w-3xl lg:mx-0 lg:max-w-none">
+        <BlogContent>
+          <Content />
+        </BlogContent>
+
+        {/* Tags */}
+        {
+          post.data.tags.length > 0 && (
+            <div class="border-border mt-12 flex flex-wrap items-center gap-3 border-t pt-8">
+              <span class="text-muted font-medium">Tags:</span>
+              {post.data.tags.map((tag) => (
+                <a
+                  href={`/blog/tags/${slugify(tag)}/`}
+                  class="bg-surface-alt hover:bg-accent rounded-full px-3 py-1 text-sm transition-colors hover:text-white"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
+          )
+        }
+
+        {/* Author */}
+        <div class="mt-12">
+          <AuthorCard author={author} variant="compact" />
+        </div>
+
+        {/* Prev/Next */}
+        {
+          (prevPost || nextPost) && (
+            <nav class="border-border mt-8 grid grid-cols-1 gap-4 border-t pt-8 md:grid-cols-2">
+              {prevPost ? (
+                <a
+                  href={`/blog/${prevPost.id}/`}
+                  class="border-border hover:border-accent group flex flex-col rounded-2xl border p-4 transition-colors"
+                >
+                  <span class="text-muted mb-1 text-xs">← Previous</span>
+                  <span class="text-ink group-hover:text-accent line-clamp-2 font-semibold transition-colors">
+                    {prevPost.data.title}
+                  </span>
+                </a>
+              ) : (
+                <div />
+              )}
+              {nextPost && (
+                <a
+                  href={`/blog/${nextPost.id}/`}
+                  class="border-border hover:border-accent group flex flex-col rounded-2xl border p-4 text-right transition-colors md:col-start-2"
+                >
+                  <span class="text-muted mb-1 text-xs">Next →</span>
+                  <span class="text-ink group-hover:text-accent line-clamp-2 font-semibold transition-colors">
+                    {nextPost.data.title}
+                  </span>
+                </a>
+              )}
+            </nav>
+          )
+        }
+      </div>
+
+      {/* Sticky TOC */}
+      <aside class="hidden lg:block">
+        <div class="sticky top-24">
+          <TableOfContents headings={headings} />
+        </div>
+      </aside>
+    </div>
+
+    {/* Related */}
+    {
+      related.length > 0 && (
+        <section class="border-border mx-auto mt-20 max-w-6xl border-t pt-16">
+          <h2 class="heading-2 mb-8">Related posts</h2>
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <BlogCard
+                title={p.data.title}
+                description={p.data.description}
+                href={`/blog/${p.id}/`}
+                date={p.data.pubDate}
+                authorSlug={p.data.author}
+                tags={p.data.tags}
+                image={p.data.image}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </article>
+</PageLayout>

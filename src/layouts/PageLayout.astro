@@ -1,0 +1,22 @@
+---
+import Footer from '@/components/organisms/Footer.astro'
+import Header from '@/components/organisms/Header.astro'
+
+import BaseLayout from './BaseLayout.astro'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const props = Astro.props
+---
+
+<BaseLayout {...props}>
+  <Header />
+  <main class="grow">
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>

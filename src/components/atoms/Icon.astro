@@ -1,0 +1,13 @@
+---
+import { Icon as AstroIcon } from 'astro-icon/components'
+
+interface Props {
+  name: string
+  class?: string
+  size?: number
+}
+
+const { name, class: className = 'h-5 w-5', size } = Astro.props
+---
+
+<AstroIcon name={name} class={className} width={size} height={size} />
