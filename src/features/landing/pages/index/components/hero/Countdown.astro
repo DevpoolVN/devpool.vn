@@ -1,0 +1,52 @@
+---
+interface Props {
+  to: string
+  label?: string
+}
+
+const { to, label = 'CÒN' } = Astro.props
+---
+
+<div
+  class="flex items-stretch flex-wrap gap-2 mb-6"
+  aria-live="polite"
+  aria-label="Countdown"
+  data-cd={to}
+>
+  <span class="flex items-center font-mono font-semibold text-[11px] uppercase tracking-[2px] text-dp-paper pr-2">{label}</span>
+  <div class="flex flex-col items-center justify-center bg-dp-black px-3 py-2 min-w-16 border-[2.5px] border-dp-paper">
+    <b data-cd-d class="font-display text-[22px] text-dp-paper leading-none">--</b>
+    <i class="not-italic font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-yellow mt-1">NGÀY</i>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-dp-black px-3 py-2 min-w-16 border-[2.5px] border-dp-paper">
+    <b data-cd-h class="font-display text-[22px] text-dp-paper leading-none">--</b>
+    <i class="not-italic font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-yellow mt-1">GIỜ</i>
+  </div>
+  <div class="flex flex-col items-center justify-center bg-dp-black px-3 py-2 min-w-16 border-[2.5px] border-dp-paper">
+    <b data-cd-m class="font-display text-[22px] text-dp-paper leading-none">--</b>
+    <i class="not-italic font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-yellow mt-1">PHÚT</i>
+  </div>
+</div>
+
+<script is:inline>
+  (function(){
+    const root = document.querySelector('[data-cd]');
+    if (!root) return;
+    const target = new Date(root.getAttribute('data-cd')).getTime();
+    if (Number.isNaN(target)) return;
+    const d = root.querySelector('[data-cd-d]');
+    const h = root.querySelector('[data-cd-h]');
+    const m = root.querySelector('[data-cd-m]');
+    function tick(){
+      const diff = Math.max(0, target - Date.now());
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      if (d) d.textContent = String(days).padStart(2,'0');
+      if (h) h.textContent = String(hours).padStart(2,'0');
+      if (m) m.textContent = String(mins).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>

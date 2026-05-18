@@ -1,0 +1,22 @@
+---
+interface Props {
+  num: string
+  title: string
+  description?: string
+}
+
+const { num, title, description } = Astro.props
+---
+
+<div class="flex items-end justify-between flex-wrap gap-4 mb-12">
+  <div>
+    <div class="block font-mono font-semibold text-[11px] uppercase tracking-[2px] mb-6 text-(--sec-num-color,var(--color-dp-dim))">{num}</div>
+    <h2
+      class="font-display uppercase mb-4 text-[clamp(32px,5vw,56px)] leading-[1.2] text-(--sec-title-color,var(--color-dp-black))"
+      set:html={title}
+    />
+  </div>
+  {description && (
+    <p class="font-hand text-lg max-w-95 text-(--sec-desc-color,var(--color-dp-black))">{description}</p>
+  )}
+</div>

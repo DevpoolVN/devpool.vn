@@ -28,6 +28,7 @@
     "astro": "^6.3.3",
     "astro-icon": "^1.1.5",
     "astro-seo": "^1.1.0",
+    "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
     "tailwindcss": "^4.3.0"
   },

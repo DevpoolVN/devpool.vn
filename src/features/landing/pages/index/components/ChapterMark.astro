@@ -1,0 +1,29 @@
+---
+import Container from '@/core/components/Container.astro'
+
+interface Props {
+  arrow?: string
+  text: string
+  side?: 'left' | 'right'
+}
+
+const { arrow = '↓ NEXT', text, side = 'right' } = Astro.props
+---
+
+<Container class="relative h-0 z-10 pointer-events-none">
+  <div
+    class:list={[
+      'absolute flex items-center gap-3 bg-dp-yellow px-4 py-2 lg:px-6 lg:py-3 border-[3px] border-dp-black shadow-dp-md pointer-events-auto',
+      '-top-9 lg:-top-14.5',
+      side === 'left'
+        ? 'left-6 lg:left-12 rotate-2 lg:rotate-3'
+        : 'right-6 lg:right-12 -rotate-2 lg:-rotate-3',
+    ]}
+  >
+    <svg class="block shrink-0 w-8 h-8 lg:w-10.5 lg:h-10.5" viewBox="0 0 750 750" aria-hidden="true"><use href="#dp-mask"/></svg>
+    <span class="flex flex-col gap-1 pl-3 border-l-2 border-dp-black">
+      <span class="font-display text-base text-dp-red leading-none">{arrow}</span>
+      <span class="font-mono font-semibold text-[11px] uppercase tracking-[1.5px] text-dp-black whitespace-nowrap">{text}</span>
+    </span>
+  </div>
+</Container>

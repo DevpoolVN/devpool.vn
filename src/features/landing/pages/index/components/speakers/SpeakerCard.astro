@@ -1,0 +1,31 @@
+---
+interface Props {
+  index: string
+  name: string
+  role: string
+  bio: string
+  avatar?: string
+}
+
+const { index, name, role, bio, avatar } = Astro.props
+---
+
+<article class="spk-card bg-dp-paper overflow-hidden flex flex-col transition-[transform,box-shadow] duration-150 ease-out border-[3px] border-dp-black shadow-dp-md hover:-translate-x-[3px] hover:-translate-y-[3px] hover:shadow-dp-lg">
+  <div class="spk-avatar flex items-center justify-center relative py-8 border-b-[3px] border-dp-black [background:radial-gradient(circle,theme(--color-dp-paper)_1.2px,transparent_1.5px)_0_0_/_12px_12px,theme(--color-dp-red)]">
+    <div class="spk-frame relative block bg-dp-paper w-[72%] aspect-square border-[3px] border-dp-black shadow-dp-sm">
+      <span class="absolute z-2 top-0 left-3 -translate-x-1/3 -translate-y-1/2 bg-dp-red text-dp-paper font-mono font-semibold text-[10px] tracking-[2px] uppercase px-2 py-1 border-2 border-dp-black">{index}</span>
+      {
+        avatar ? (
+          <img class="w-full h-full block object-cover object-[center_20%]" src={avatar} alt={name} loading="lazy" />
+        ) : (
+          <svg class="w-full h-full block box-border p-[8%]" viewBox="0 0 750 750" aria-hidden="true"><use href="#dp-mask"/></svg>
+        )
+      }
+    </div>
+  </div>
+  <div class="p-6">
+    <h3 class="font-display text-[22px] uppercase tracking-[0.5px] mb-2 font-normal leading-none">{name}</h3>
+    <div class="font-mono font-semibold text-[11px] uppercase tracking-[1.5px] text-dp-red mb-3">{role}</div>
+    <p class="text-[13px] text-dp-dim leading-[1.6]">{bio}</p>
+  </div>
+</article>

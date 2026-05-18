@@ -1,0 +1,72 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { cn } from '@/core/utils/cn'
+
+const textareaVariants = cva(
+  'w-full min-h-[110px] p-3 font-sans text-sm bg-dp-paper text-dp-black border-[3px] border-dp-black shadow-[3px_3px_0_theme(colors.dp-black)] resize-y transition-[transform,box-shadow] duration-fast ease-out focus:outline-none focus:shadow-[3px_3px_0_theme(colors.dp-red)] focus:-translate-x-px focus:-translate-y-px focus:border-dp-red disabled:opacity-40 disabled:pointer-events-none',
+  {
+    variants: {
+      variant: {
+        default: '',
+        error:
+          'border-dp-red shadow-[3px_3px_0_theme(colors.dp-red)] focus:border-dp-red focus:shadow-[3px_3px_0_theme(colors.dp-red)]',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+)
+
+interface Props extends VariantProps<typeof textareaVariants> {
+  name?: string
+  id?: string
+  value?: string
+  placeholder?: string
+  required?: boolean
+  disabled?: boolean
+  readonly?: boolean
+  rows?: number
+  maxlength?: number
+  minlength?: number
+  'aria-label'?: string
+  'aria-describedby'?: string
+  'aria-invalid'?: boolean | 'true' | 'false'
+  class?: string
+}
+
+const {
+  name,
+  id,
+  value,
+  placeholder,
+  required = false,
+  disabled = false,
+  readonly = false,
+  rows,
+  maxlength,
+  minlength,
+  variant,
+  'aria-label': ariaLabel,
+  'aria-describedby': ariaDescribedby,
+  'aria-invalid': ariaInvalid,
+  class: className,
+} = Astro.props
+---
+
+<textarea
+  name={name}
+  id={id}
+  placeholder={placeholder}
+  required={required}
+  disabled={disabled}
+  readonly={readonly}
+  rows={rows}
+  maxlength={maxlength}
+  minlength={minlength}
+  aria-label={ariaLabel}
+  aria-describedby={ariaDescribedby}
+  aria-invalid={ariaInvalid}
+  class={cn(textareaVariants({ variant, className }))}
+>{value}</textarea>

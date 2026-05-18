@@ -1,0 +1,51 @@
+---
+import Container from '@/core/components/Container.astro'
+import { EVENT, heroMeta, ticketRows } from '../../data/event'
+
+import Countdown from './Countdown.astro'
+import Ticket from './Ticket.astro'
+---
+
+<section
+  class="hero relative overflow-hidden text-dp-paper py-12 lg:py-24
+         [background:radial-gradient(circle,theme(--color-dp-black)_1.2px,transparent_1.5px)_0_0_/_10px_10px,theme(--color-dp-red)]
+         after:content-[''] after:absolute after:left-0 after:right-0 after:h-4 after:-bottom-2 after:[background:repeating-linear-gradient(-45deg,theme(--color-dp-black)_0_10px,theme(--color-dp-yellow)_10px_20px)]
+         lg:after:h-14 lg:after:bottom-0 lg:after:[background:repeating-linear-gradient(-45deg,theme(--color-dp-black)_0_14px,theme(--color-dp-yellow)_14px_28px)] lg:after:[clip-path:polygon(0_85%,100%_40%,100%_100%,0_100%)]"
+>
+  <Container>
+    <div class="relative z-2 grid gap-12 items-center grid-cols-1 lg:grid-cols-[1.4fr_1fr]">
+      <div>
+        <div class="block mb-4 lg:flex lg:gap-2 lg:flex-wrap">
+          <span class="block w-full bg-dp-paper text-dp-black font-mono font-semibold text-[10px] uppercase tracking-[1px] px-3 py-1 leading-normal wrap-break-word lg:inline-block lg:w-auto lg:text-[11px] lg:tracking-[2px]">★ TECH SEMINAR · 24.05.2026 · FPT ĐÀ NẴNG</span>
+        </div>
+        <h1 class="font-display uppercase mb-6 text-[clamp(36px,5.8vw,80px)] leading-[1.1] [overflow-wrap:break-word]">
+          JUST SHIP.<br />
+          <span class="bg-dp-paper text-dp-black px-2 [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">VIBE CODING.</span>
+        </h1>
+        <div class="font-utility text-[22px] tracking-[1px] uppercase text-dp-yellow mb-4">FROM PROMPT TO PRODUCTION</div>
+        <p class="font-sans text-base max-w-130 mb-8 leading-[1.6] [&_strong]:bg-dp-paper [&_strong]:text-dp-black [&_strong]:px-1">
+          <strong>2 tiếng. 3 engineer. 1 chủ đề không hype.</strong> Code cùng AI mà vẫn cầm trịch
+          production — từ prompt đầu tiên đến lúc <strong>deploy</strong> chạy xanh.
+        </p>
+
+        <Countdown to={EVENT.date} />
+
+        <div class="grid grid-cols-2 gap-3 mt-8 pt-4 font-mono font-semibold text-[11px] uppercase tracking-[1.5px] text-dp-paper border-t-2 border-dashed border-dp-paper
+                    lg:flex lg:flex-wrap lg:gap-6 lg:pt-6">
+          {heroMeta.map((m) => (
+            <span class="justify-self-start"><b class="font-display text-[20px] text-dp-paper mr-1 leading-none">{m.value}</b> {m.label}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center gap-6">
+        <Ticket
+          title="Vibe Coding 2026"
+          strip={`★ ADMIT ONE · ID ${EVENT.shortCode}`}
+          rows={ticketRows}
+        />
+      </div>
+    </div>
+  </Container>
+</section>
+
