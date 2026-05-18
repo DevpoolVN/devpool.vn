@@ -3,10 +3,10 @@ import Container from '@/core/components/Container.astro'
 import { SITE } from '@/shared/config/site'
 
 const currentYear = new Date().getFullYear()
-const arrowOut = 'mr-2 select-none text-[color-mix(in_srgb,var(--color-dp-paper)_40%,var(--color-dp-black))]'
+const arrowOut = 'mr-2 select-none text-[color-mix(in_srgb,theme(--color-dp-paper)_40%,theme(--color-dp-black))]'
 const ftKey = 'text-dp-yellow mr-2 inline-block min-w-20 lg:min-w-0 lg:inline'
-const codeStyle = 'font-mono px-1 bg-[color-mix(in_srgb,var(--color-dp-paper)_12%,var(--color-dp-black))]'
-const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[color-mix(in_srgb,var(--color-dp-paper)_25%,var(--color-dp-black))]'
+const codeStyle = 'font-mono px-1 bg-[color-mix(in_srgb,theme(--color-dp-paper)_12%,theme(--color-dp-black))]'
+const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[color-mix(in_srgb,theme(--color-dp-paper)_25%,theme(--color-dp-black))]'
 ---
 
 <footer class="bg-dp-black text-dp-paper relative overflow-hidden border-t-[6px] border-dp-red">
@@ -54,8 +54,8 @@ const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[c
       <a
         href="#register"
         class="block my-6 py-3 px-4 no-underline text-dp-paper transition-[background-color,border-color] duration-150 border-l-[3px] border-dp-red
-               bg-[color-mix(in_srgb,var(--color-dp-paper)_6%,var(--color-dp-black))]
-               hover:bg-[color-mix(in_srgb,var(--color-dp-paper)_10%,var(--color-dp-black))]
+               bg-[color-mix(in_srgb,theme(--color-dp-paper)_6%,theme(--color-dp-black))]
+               hover:bg-[color-mix(in_srgb,theme(--color-dp-paper)_10%,theme(--color-dp-black))]
                hover:border-l-dp-yellow"
       >
         <span class="text-dp-red-soft mr-2 select-none">$</span>
@@ -65,7 +65,7 @@ const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[c
 
       <div class={dividerStyle}>// ────── ////////////////////// ──────────────────────────</div>
 
-      <div class="italic text-[color-mix(in_srgb,var(--color-dp-paper)_45%,var(--color-dp-black))] [&_a]:no-underline [&_a]:transition-colors [&_a]:border-b [&_a]:border-dotted [&_a]:text-[color-mix(in_srgb,var(--color-dp-paper)_70%,var(--color-dp-black))] [&_a:hover]:text-dp-yellow">
+      <div class="italic text-[color-mix(in_srgb,theme(--color-dp-paper)_45%,theme(--color-dp-black))] [&_a]:no-underline [&_a]:transition-colors [&_a]:border-b [&_a]:border-dotted [&_a]:text-[color-mix(in_srgb,theme(--color-dp-paper)_70%,theme(--color-dp-black))] [&_a:hover]:text-dp-yellow">
         // © {currentYear} {SITE.title} · #VibeCoding2026 · <a href="#top">scroll_to_top()</a>
       </div>
     </div>

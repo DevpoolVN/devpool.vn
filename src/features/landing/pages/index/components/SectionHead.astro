@@ -1,22 +1,55 @@
 ---
-interface Props {
+import { cva, type VariantProps } from 'class-variance-authority'
+
+const numVariants = cva(
+  'block font-mono font-semibold text-[11px] uppercase tracking-[2px] mb-6',
+  {
+    variants: {
+      variant: {
+        light: 'text-dp-dim',
+        dark: 'text-dp-red-soft',
+      },
+    },
+    defaultVariants: { variant: 'light' },
+  },
+)
+
+const titleVariants = cva(
+  'font-display uppercase mb-4 text-[clamp(32px,5vw,56px)] leading-[1.2]',
+  {
+    variants: {
+      variant: {
+        light: 'text-dp-black',
+        dark: 'text-dp-paper',
+      },
+    },
+    defaultVariants: { variant: 'light' },
+  },
+)
+
+const descVariants = cva('font-hand text-lg max-w-95', {
+  variants: {
+    variant: {
+      light: 'text-dp-black',
+      dark: 'text-dp-red-soft',
+    },
+  },
+  defaultVariants: { variant: 'light' },
+})
+
+interface Props extends VariantProps<typeof numVariants> {
   num: string
   title: string
   description?: string
 }
 
-const { num, title, description } = Astro.props
+const { num, title, description, variant } = Astro.props
 ---
 
 <div class="flex items-end justify-between flex-wrap gap-4 mb-12">
   <div>
-    <div class="block font-mono font-semibold text-[11px] uppercase tracking-[2px] mb-6 text-(--sec-num-color,var(--color-dp-dim))">{num}</div>
-    <h2
-      class="font-display uppercase mb-4 text-[clamp(32px,5vw,56px)] leading-[1.2] text-(--sec-title-color,var(--color-dp-black))"
-      set:html={title}
-    />
+    <div class={numVariants({ variant })}>{num}</div>
+    <h2 class={titleVariants({ variant })} set:html={title} />
   </div>
-  {description && (
-    <p class="font-hand text-lg max-w-95 text-(--sec-desc-color,var(--color-dp-black))">{description}</p>
-  )}
+  {description && <p class={descVariants({ variant })}>{description}</p>}
 </div>

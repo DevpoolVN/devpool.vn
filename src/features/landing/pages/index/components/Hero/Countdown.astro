@@ -1,0 +1,26 @@
+---
+import CountdownSlot from './CountdownSlot.astro'
+
+interface Props {
+  to: string
+  label?: string
+}
+
+const { to, label = 'CÒN' } = Astro.props
+---
+
+<dp-countdown
+  data-to={to}
+  class="flex items-stretch flex-wrap gap-2 mb-6"
+  aria-live="polite"
+  aria-label="Countdown"
+>
+  <span class="flex items-center font-mono font-semibold text-[11px] uppercase tracking-[2px] text-dp-paper pr-2">{label}</span>
+  <CountdownSlot slot="d" label="NGÀY" />
+  <CountdownSlot slot="h" label="GIỜ" />
+  <CountdownSlot slot="m" label="PHÚT" />
+</dp-countdown>
+
+<script>
+  import './Countdown.client.ts'
+</script>
