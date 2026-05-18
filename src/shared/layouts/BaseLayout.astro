@@ -20,6 +20,15 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
+
+const siteGraph = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: `${SITE.url}/`,
+  name: SITE.title,
+  description: SITE.description,
+}
 ---
 
 <!doctype html>
@@ -60,6 +69,8 @@ const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
       href="https://fonts.googleapis.com/css2?family=Bungee&family=Anton&family=Patrick+Hand&family=Be+Vietnam+Pro:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json" set:html={JSON.stringify(siteGraph)} is:inline />
 
     <ClientRouter />
 

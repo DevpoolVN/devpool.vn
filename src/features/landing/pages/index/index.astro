@@ -1,31 +1,18 @@
 ---
 import BaseLayout from '@/shared/layouts/BaseLayout.astro'
-import { SITE } from '@/shared/config/site'
 
 import About from './components/About.astro'
 import ChapterMark from './components/ChapterMark.astro'
 import Footer from './components/Footer.astro'
 import Header from './components/Header.astro'
-import JsonLD from './components/JsonLD.astro'
 import Ticker from './components/Ticker.astro'
 import Agenda from './components/Agenda/Agenda.astro'
 import Hero from './components/Hero/Hero.astro'
 import Register from './components/Register/Register.astro'
 import Speakers from './components/Speakers/Speakers.astro'
-
-const siteGraph = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  '@id': `${SITE.url}/#website`,
-  url: `${SITE.url}/`,
-  name: SITE.title,
-  description: SITE.description,
-}
 ---
 
 <BaseLayout>
-  <JsonLD data={siteGraph} />
-
   <Header />
 
   <main class="grow">
