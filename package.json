@@ -30,6 +30,7 @@
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260124.0",
     "@eslint/compat": "^2",
     "@eslint/js": "^10",
     "@tailwindcss/typography": "^0.5.19",
@@ -45,6 +46,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-sort-json": "^4.2.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "typescript": "^6"
+    "typescript": "^6",
+    "wrangler": "^4.92.0"
   }
 }
