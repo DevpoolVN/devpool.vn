@@ -1,27 +1,52 @@
 # Dependencies
 node_modules/
 
-# Astro build outputs
+# Yarn 4 — corepack-managed, node-modules linker
+# Docs: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/versions
+.pnp.*
+
+# Astro
 dist/
 .astro/
 
-# Environment
+# Cloudflare Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Environment — ignore all .env files, but keep examples
 .env
-.env.local
-.env.production
+.env.*
+!.env.example
+!.env.*.example
 
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Lint/format/test caches
+.eslintcache
+.prettiercache
+coverage/
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# IDE
+# Editors
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea/
+*.swp
+*.swo
 
 # TypeScript
 *.tsbuildinfo
