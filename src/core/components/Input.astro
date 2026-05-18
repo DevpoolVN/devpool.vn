@@ -3,21 +3,17 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/core/utils/cn'
 
-const inputVariants = cva(
-  'w-full min-h-11 p-3 font-sans text-sm bg-dp-paper text-dp-black border-[3px] border-dp-black shadow-[3px_3px_0_theme(colors.dp-black)] transition-[transform,box-shadow] duration-fast ease-out focus:outline-none focus:shadow-[3px_3px_0_theme(colors.dp-red)] focus:-translate-x-px focus:-translate-y-px focus:border-dp-red disabled:opacity-40 disabled:pointer-events-none',
-  {
-    variants: {
-      variant: {
-        default: '',
-        error:
-          'border-dp-red shadow-[3px_3px_0_theme(colors.dp-red)] focus:border-dp-red focus:shadow-[3px_3px_0_theme(colors.dp-red)]',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
+const inputVariants = cva('dp-control min-h-11', {
+  variants: {
+    variant: {
+      default: '',
+      error: 'dp-control-error',
     },
   },
-)
+  defaultVariants: {
+    variant: 'default',
+  },
+})
 
 interface Props extends VariantProps<typeof inputVariants> {
   type?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'url' | 'search'

@@ -3,14 +3,14 @@ import Container from '@/core/components/Container.astro'
 import { SITE } from '@/shared/config/site'
 
 const currentYear = new Date().getFullYear()
-const arrowOut = 'mr-2 select-none text-[color-mix(in_srgb,theme(--color-dp-paper)_40%,theme(--color-dp-black))]'
+const arrowOut = 'mr-2 select-none text-dp-paper-soft'
 const ftKey = 'text-dp-yellow mr-2 inline-block min-w-20 lg:min-w-0 lg:inline'
-const codeStyle = 'font-mono px-1 bg-[color-mix(in_srgb,theme(--color-dp-paper)_12%,theme(--color-dp-black))]'
-const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[color-mix(in_srgb,theme(--color-dp-paper)_25%,theme(--color-dp-black))]'
+const codeStyle = 'font-mono px-1 bg-dp-paper-faint'
+const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-dp-paper-soft'
 ---
 
 <footer class="bg-dp-black text-dp-paper relative overflow-hidden border-t-[6px] border-dp-red">
-  <Container size="narrow" as="div" class="py-12 lg:py-24 font-mono font-semibold text-xs leading-[1.7] lg:text-sm lg:leading-[1.8]">
+  <Container size="narrow" as="div" class="dp-section font-mono font-semibold text-dp-sm leading-dp-loose lg:text-dp-base">
     <div role="contentinfo">
       <div>
         <span class="text-dp-red-soft mr-2 select-none">$</span>
@@ -54,9 +54,7 @@ const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[c
       <a
         href="#register"
         class="block my-6 py-3 px-4 no-underline text-dp-paper transition-[background-color,border-color] duration-150 border-l-[3px] border-dp-red
-               bg-[color-mix(in_srgb,theme(--color-dp-paper)_6%,theme(--color-dp-black))]
-               hover:bg-[color-mix(in_srgb,theme(--color-dp-paper)_10%,theme(--color-dp-black))]
-               hover:border-l-dp-yellow"
+               bg-dp-paper-faint hover:border-l-dp-yellow"
       >
         <span class="text-dp-red-soft mr-2 select-none">$</span>
         <span class="text-dp-yellow font-semibold">./register-now</span>
@@ -65,7 +63,7 @@ const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-[c
 
       <div class={dividerStyle}>// ────── ////////////////////// ──────────────────────────</div>
 
-      <div class="italic text-[color-mix(in_srgb,theme(--color-dp-paper)_45%,theme(--color-dp-black))] [&_a]:no-underline [&_a]:transition-colors [&_a]:border-b [&_a]:border-dotted [&_a]:text-[color-mix(in_srgb,theme(--color-dp-paper)_70%,theme(--color-dp-black))] [&_a:hover]:text-dp-yellow">
+      <div class="italic text-dp-paper-soft [&_a]:no-underline [&_a]:transition-colors [&_a]:border-b [&_a]:border-dotted [&_a]:text-dp-paper-strong [&_a:hover]:text-dp-yellow">
         // © {currentYear} {SITE.title} · #VibeCoding2026 · <a href="#top">scroll_to_top()</a>
       </div>
     </div>

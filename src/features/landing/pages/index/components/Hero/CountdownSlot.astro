@@ -8,6 +8,6 @@ const { slot, label } = Astro.props
 ---
 
 <div class="flex flex-col items-center justify-center bg-dp-black px-3 py-2 min-w-16 border-[2.5px] border-dp-paper">
-  <b data-slot={slot} class="font-display text-[22px] text-dp-paper leading-none">--</b>
-  <i class="not-italic font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-yellow mt-1">{label}</i>
+  <b data-slot={slot} class="font-display text-dp-lg text-dp-paper leading-none">--</b>
+  <i class="dp-label-mono not-italic text-dp-xs text-dp-yellow mt-1">{label}</i>
 </div>

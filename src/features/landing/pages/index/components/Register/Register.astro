@@ -9,25 +9,25 @@ import FormField from './FormField.astro'
 
 <section
   id="register"
-  class="py-12 lg:py-24 border-y-[6px] border-dp-black bg-dp-cream bg-[radial-gradient(circle,theme(--color-dp-red)_1.2px,transparent_1.5px)] bg-[size:10px_10px]"
+  class="dp-section border-y-[6px] border-dp-black bg-dp-cream bg-[radial-gradient(circle,theme(--color-dp-red)_1.2px,transparent_1.5px)] bg-[size:10px_10px]"
 >
   <Container size="narrow" class="grid gap-8">
     <header class="text-center">
-      <div class="inline-block bg-dp-black text-dp-paper font-mono font-semibold uppercase px-3 py-1 mb-4 text-[12px] tracking-[3px]">
+      <div class="dp-label-mono tracking-dp-extra inline-block bg-dp-black text-dp-paper px-3 py-1 mb-4 text-dp-sm">
         ★ GIỮ CHỖ TRƯỚC ★
       </div>
-      <h2 class="font-display uppercase mb-3 text-[clamp(36px,6vw,64px)] leading-[0.95]">
+      <h2 class="dp-heading-display mb-3 text-[clamp(36px,6vw,64px)] leading-[0.95]">
         VÀO LÀ <span class="text-dp-red">XONG</span>.<br />
         SUẤT KHÔNG <span class="text-dp-red">VÔ HẠN</span>.
       </h2>
-      <p class="font-hand text-xl text-dp-black">Điền 4 ô — mất 30 giây. Lab có giới hạn, đến sớm chọn chỗ tốt.</p>
+      <p class="font-hand text-dp-lg text-dp-black">Điền 4 ô — mất 30 giây. Lab có giới hạn, đến sớm chọn chỗ tốt.</p>
     </header>
 
     <form
       id="regForm"
       novalidate
       method="post"
-      class="bg-dp-black text-dp-paper p-8 px-6 border-4 border-dp-black shadow-dp-xl-red space-y-4"
+      class="dp-card-featured p-8 px-6 space-y-4"
     >
       <div class="grid gap-4 grid-cols-1 lg:grid-cols-2">
         <FormField id="f-name" name="fullname" label="Họ và tên" placeholder="Nguyễn Văn A" required autocomplete="name" />
@@ -66,13 +66,13 @@ import FormField from './FormField.astro'
         hint="Câu hay sẽ được ưu tiên lên ghế nóng Q&amp;A."
       />
 
-      <label class="inline-flex items-start gap-3 min-h-11 py-2.75 cursor-pointer text-sm leading-snug">
+      <label class="inline-flex items-start gap-3 min-h-11 py-2.75 cursor-pointer text-dp-base leading-snug">
         <Checkbox name="consent" checked required />
         Tôi đồng ý nhận thông báo nhắc lịch qua email/SĐT. Không spam, không bán dữ liệu.
       </label>
 
       <div class="flex justify-between items-center gap-4 flex-wrap pt-4 border-t-2 border-dp-paper">
-        <div class="font-mono font-semibold text-[11px] tracking-[1px] text-dp-red-soft">
+        <div class="dp-label-mono tracking-dp-tight text-dp-sm text-dp-red-soft">
           ★ MÃ EVENT · {EVENT.code}
         </div>
         <Button type="submit" size="lg">GIỮ CHỖ NGAY ↗</Button>

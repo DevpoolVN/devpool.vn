@@ -4,24 +4,24 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/core/utils/cn'
 
 const buttonVariants = cva(
-  'inline-flex items-center gap-2 font-sans font-black tracking-[1px] uppercase no-underline cursor-pointer border-[3px] border-dp-black transition-[transform,box-shadow] duration-fast ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 focus-visible:[outline:3px_solid_theme(colors.dp-yellow)] focus-visible:[outline-offset:2px] disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:shadow-none aria-busy:cursor-progress [&_svg]:h-5 [&_svg]:w-5 [&_svg:not(.animate-spin)]:[stroke-width:2.5]',
+  'dp-press dp-bordered dp-label-impact inline-flex items-center gap-2 no-underline cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 focus-visible:[outline:3px_solid_theme(colors.dp-yellow)] focus-visible:[outline-offset:2px] disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:shadow-none aria-busy:cursor-progress [&_svg]:h-5 [&_svg]:w-5 [&_svg:not(.animate-spin)]:[stroke-width:2.5]',
   {
     variants: {
       variant: {
         primary:
-          'bg-dp-red text-dp-paper shadow-[3px_3px_0_theme(colors.dp-black)] hover:shadow-[6px_6px_0_theme(colors.dp-black)] active:shadow-none',
+          'bg-dp-red text-dp-paper shadow-dp-sm hover:shadow-dp-md active:shadow-none',
         yellow:
-          'bg-dp-yellow text-dp-black shadow-[3px_3px_0_theme(colors.dp-black)] hover:shadow-[6px_6px_0_theme(colors.dp-black)] active:shadow-none',
+          'bg-dp-yellow text-dp-black shadow-dp-sm hover:shadow-dp-md active:shadow-none',
         secondary:
-          'bg-dp-cream text-dp-black shadow-[3px_3px_0_theme(colors.dp-black)] hover:shadow-[6px_6px_0_theme(colors.dp-black)] active:shadow-none',
+          'bg-dp-cream text-dp-black shadow-dp-sm hover:shadow-dp-md active:shadow-none',
         ghost:
           'bg-transparent text-dp-black shadow-none hover:bg-dp-paper hover:shadow-none active:bg-dp-paper active:shadow-none',
-        dark: 'bg-dp-black text-dp-paper shadow-[3px_3px_0_theme(colors.dp-black)] hover:shadow-[6px_6px_0_theme(colors.dp-black)] active:shadow-none',
+        dark: 'bg-dp-black text-dp-paper shadow-dp-sm hover:shadow-dp-md active:shadow-none',
       },
       size: {
-        sm: 'text-[11px] min-h-9 px-4 py-2',
-        md: 'text-[13px] min-h-11 px-6 py-3',
-        lg: 'text-[15px] min-h-[52px] px-8 py-4',
+        sm: 'text-dp-sm min-h-9 px-4 py-2',
+        md: 'text-dp-base min-h-11 px-6 py-3',
+        lg: 'text-dp-md min-h-13 px-8 py-4',
       },
     },
     defaultVariants: {
@@ -91,5 +91,5 @@ const tagProps = href
     )
   }
   <slot />
-  {arrow && !loading && <span class="text-[15px] leading-none" aria-hidden="true">→</span>}
+  {arrow && !loading && <span class="text-dp-md leading-none" aria-hidden="true">→</span>}
 </Tag>

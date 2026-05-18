@@ -12,21 +12,21 @@ const { title, strip, rows = [], sfx } = Astro.props
 <div class="relative">
   {sfx && (
     <div
-      class="hidden lg:block absolute -top-[82px] right-2 rotate-[8deg] font-display text-[44px] bg-dp-yellow text-dp-black px-4 py-2 z-3 border-[3px] border-dp-black shadow-dp-md"
+      class="dp-bordered hidden lg:block absolute -top-20.5 right-2 rotate-[8deg] font-display text-dp-xl bg-dp-yellow text-dp-black px-4 py-2 z-3 shadow-dp-md"
     >{sfx}</div>
   )}
-  <div class="bg-dp-paper text-dp-black p-4 px-6 relative w-full max-w-full lg:max-w-[320px] rotate-[-1.5deg] lg:rotate-[1.5deg] border-4 border-dp-black shadow-dp-lg">
+  <div class="bg-dp-paper text-dp-black p-4 px-6 relative w-full max-w-full lg:max-w-80 rotate-[-1.5deg] lg:rotate-[1.5deg] border-4 border-dp-black shadow-dp-lg">
     {strip && (
-      <div class="inline-block bg-dp-black text-dp-paper font-mono font-semibold text-[10px] tracking-[2px] px-3 py-1 mb-3">{strip}</div>
+      <div class="dp-label-mono tracking-dp-wide inline-block bg-dp-black text-dp-paper text-dp-xs px-3 py-1 mb-3">{strip}</div>
     )}
-    <div class="font-display text-lg uppercase text-dp-black leading-[1.1]">{title}</div>
+    <div class="font-display text-dp-lg uppercase text-dp-black leading-dp-display">{title}</div>
     {
       rows.length > 0 && (
         <div class="grid grid-cols-2 gap-3 mt-3 pt-3 border-t-2 border-dashed border-dp-black">
           {rows.map((r) => (
             <div>
-              <div class="font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-dim">{r.key}</div>
-              <div class="font-utility text-base uppercase text-dp-black mt-0.5">{r.value}</div>
+              <div class="dp-label-mono text-dp-xs text-dp-dim">{r.key}</div>
+              <div class="font-utility text-dp-md uppercase text-dp-black mt-0.5">{r.value}</div>
             </div>
           ))}
         </div>

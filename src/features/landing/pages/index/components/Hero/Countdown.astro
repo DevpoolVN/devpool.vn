@@ -15,7 +15,7 @@ const { to, label = 'CÒN' } = Astro.props
   aria-live="polite"
   aria-label="Countdown"
 >
-  <span class="flex items-center font-mono font-semibold text-[11px] uppercase tracking-[2px] text-dp-paper pr-2">{label}</span>
+  <span class="dp-label-mono tracking-dp-wide flex items-center text-dp-sm text-dp-paper pr-2">{label}</span>
   <CountdownSlot slot="d" label="NGÀY" />
   <CountdownSlot slot="h" label="GIỜ" />
   <CountdownSlot slot="m" label="PHÚT" />

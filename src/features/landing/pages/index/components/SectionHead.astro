@@ -2,7 +2,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const numVariants = cva(
-  'block font-mono font-semibold text-[11px] uppercase tracking-[2px] mb-6',
+  'dp-label-mono tracking-dp-wide block text-dp-sm mb-6',
   {
     variants: {
       variant: {
@@ -15,7 +15,7 @@ const numVariants = cva(
 )
 
 const titleVariants = cva(
-  'font-display uppercase mb-4 text-[clamp(32px,5vw,56px)] leading-[1.2]',
+  'dp-heading-display mb-4 text-[clamp(32px,5vw,56px)]',
   {
     variants: {
       variant: {
@@ -27,7 +27,7 @@ const titleVariants = cva(
   },
 )
 
-const descVariants = cva('font-hand text-lg max-w-95', {
+const descVariants = cva('font-hand text-dp-lg max-w-95', {
   variants: {
     variant: {
       light: 'text-dp-black',

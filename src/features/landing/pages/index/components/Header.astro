@@ -16,7 +16,7 @@ const burgerSpan = 'block bg-dp-paper w-5 h-[2.5px] transition-[transform,opacit
   <Container class="flex justify-between items-center gap-4">
     <a
       href="#top"
-      class="font-display text-[20px] tracking-[1px] flex items-center gap-2 text-dp-paper no-underline"
+      class="font-display text-dp-lg tracking-dp-tight flex items-center gap-2 text-dp-paper no-underline"
       aria-label={`${SITE.title} Workshop`}
     >
       <span class="inline-flex items-center leading-none font-display [&_svg]:w-[1em] [&_svg]:h-[1em] [&_svg]:shrink-0">
@@ -29,12 +29,12 @@ const burgerSpan = 'block bg-dp-paper w-5 h-[2.5px] transition-[transform,opacit
     <ul
       id="ab-menu"
       class="hidden [&.open]:flex absolute flex-col bg-dp-black p-0 gap-0 list-none m-0 left-0 right-0 top-[calc(100%+6px)] border-b-[6px] border-dp-red
-             divide-y divide-[color-mix(in_srgb,theme(--color-dp-paper)_10%,theme(--color-dp-black))]
+             divide-y divide-dp-paper-faint
              lg:static lg:flex lg:flex-row lg:gap-2 lg:bg-transparent lg:left-auto lg:right-auto lg:border-b-0 lg:divide-y-0
-             [&_a]:block [&_a]:text-left [&_a]:text-dp-paper [&_a]:px-6 [&_a]:py-6 [&_a]:font-utility [&_a]:text-sm [&_a]:tracking-[2px] [&_a]:uppercase [&_a]:no-underline
+             [&_a]:block [&_a]:text-left [&_a]:text-dp-paper [&_a]:px-6 [&_a]:py-6 [&_a]:font-utility [&_a]:text-dp-base [&_a]:tracking-dp-wide [&_a]:uppercase [&_a]:no-underline
              [&_a]:transition-[color,padding-left,border-color] [&_a]:duration-fast [&_a]:ease-out
-             lg:[&_a]:inline-block lg:[&_a]:font-mono lg:[&_a]:font-semibold lg:[&_a]:text-[11px] lg:[&_a]:tracking-[1.5px] lg:[&_a]:px-3 lg:[&_a]:py-2
-             lg:[&_a]:border-b-[1.5px] lg:[&_a]:border-b-transparent
+             lg:[&_a]:inline-block lg:[&_a]:font-mono lg:[&_a]:font-semibold lg:[&_a]:text-dp-sm lg:[&_a]:tracking-dp-mono lg:[&_a]:px-3 lg:[&_a]:py-2
+             lg:[&_a]:border-b-2 lg:[&_a]:border-b-transparent
              [&_a:hover]:text-dp-red-soft [&_a:hover]:pl-8
              [&_a[aria-current=page]]:text-dp-red-soft [&_a[aria-current=page]]:pl-8
              lg:[&_a:hover]:border-b-dp-red-soft lg:[&_a:hover]:pl-3

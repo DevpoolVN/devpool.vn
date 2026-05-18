@@ -4,14 +4,14 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/core/utils/cn'
 
 const checkboxVariants = cva(
-  'relative shrink-0 box-border appearance-none cursor-pointer h-[22px] w-[22px] border-[3px] border-dp-black shadow-[3px_3px_0_theme(colors.dp-black)] transition-[background-color,box-shadow] duration-fast ease-out focus-visible:outline-none disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed before:content-[""] before:absolute before:-inset-[11px] before:cursor-[inherit] checked:after:content-[""] checked:after:absolute checked:after:top-[45%] checked:after:left-1/2 checked:after:h-[8px] checked:after:w-[4px] checked:after:border-r-[2.5px] checked:after:border-b-[2.5px] checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:rotate-45',
+  'dp-bordered relative shrink-0 box-border appearance-none cursor-pointer h-5.5 w-5.5 shadow-dp-sm transition-[background-color,box-shadow] duration-fast ease-out focus-visible:outline-none disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed before:content-[""] before:absolute before:-inset-3 before:cursor-[inherit] checked:after:content-[""] checked:after:absolute checked:after:top-[45%] checked:after:left-1/2 checked:after:h-2 checked:after:w-1 checked:after:border-r-[2.5px] checked:after:border-b-[2.5px] checked:after:-translate-x-1/2 checked:after:-translate-y-1/2 checked:after:rotate-45',
   {
     variants: {
       variant: {
         default:
-          'bg-dp-paper checked:bg-dp-red checked:after:border-dp-paper focus-visible:shadow-[3px_3px_0_theme(colors.dp-red)]',
+          'bg-dp-paper checked:bg-dp-red checked:after:border-dp-paper focus-visible:shadow-dp-sm-red',
         verified:
-          'bg-dp-yellow checked:bg-dp-yellow checked:after:border-dp-black focus-visible:shadow-[3px_3px_0_theme(colors.dp-yellow-deep)]',
+          'bg-dp-yellow checked:bg-dp-yellow checked:after:border-dp-black focus-visible:shadow-dp-sm-yellow-deep',
       },
     },
     defaultVariants: {
