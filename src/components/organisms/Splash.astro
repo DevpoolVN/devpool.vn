@@ -14,7 +14,7 @@ const {
 
 <div class="splash" aria-hidden="true">
   <div class="splash-badge">{badge}</div>
-  <span class="splash-wordmark wordmark">
+  <span class="splash-wordmark">
     DEVP<svg aria-hidden="true"><use href="#dp-mask"/></svg><svg aria-hidden="true"><use href="#dp-mask"/></svg>L
   </span>
   <div class="splash-tagline">{tagline}</div>
@@ -45,10 +45,11 @@ const {
     animation: fadeUp 0.5s ease-out 0.2s both;
   }
   .splash-wordmark {
-    @apply text-dp-paper;
+    @apply inline-flex items-center leading-none font-display text-dp-paper;
     font-size: clamp(48px, 10vw, 96px);
     animation: splashIn 0.7s var(--ease-bounce);
   }
+  .splash-wordmark svg { width: 1em; height: 1em; flex-shrink: 0; }
   .splash-tagline {
     @apply font-hand text-xl text-dp-red-soft;
     animation: fadeUp 0.5s ease-out 0.5s both;
@@ -87,5 +88,9 @@ const {
   @keyframes loaderPulse {
     0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; }
     40% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>

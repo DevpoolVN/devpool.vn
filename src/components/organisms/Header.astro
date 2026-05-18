@@ -1,4 +1,5 @@
 ---
+import Button from '@/components/core/Button.astro'
 import { CTA, NAV, SITE } from '@/config/site'
 
 const tag = 'WORKSHOP'
@@ -21,7 +22,7 @@ const tag = 'WORKSHOP'
     <span></span><span></span><span></span>
   </button>
 
-  <a href={CTA.href} class="ab-cta">{CTA.label}</a>
+  <Button href={CTA.href} arrow class="ab-cta">{CTA.label}</Button>
 </nav>
 
 <script is:inline>
@@ -51,10 +52,10 @@ const tag = 'WORKSHOP'
     @apply font-display text-[20px] tracking-[1px] flex items-center gap-2 text-dp-paper no-underline;
   }
   .ab-brand .slash { @apply text-dp-red-soft mx-1; }
-  .wordmark {
+  .ab-brand .wordmark {
     @apply inline-flex items-center leading-none font-display;
   }
-  .wordmark svg { width: 1em; height: 1em; flex-shrink: 0; }
+  .ab-brand .wordmark svg { width: 1em; height: 1em; flex-shrink: 0; }
 
   .ab-menu { @apply flex gap-2 list-none m-0 p-0; }
   .ab-menu a {
@@ -64,16 +65,6 @@ const tag = 'WORKSHOP'
   }
   .ab-menu a:hover { border-color: var(--dp-red-soft); }
   .ab-menu a[aria-current="page"] { @apply text-dp-red-soft; border-color: var(--dp-red-soft); }
-
-  .ab-cta {
-    @apply inline-flex items-center gap-2 bg-dp-yellow text-dp-black font-display text-[13px] tracking-[1px] uppercase no-underline cursor-pointer px-6 py-3;
-    border: 3px solid var(--dp-black);
-    box-shadow: 5px 5px 0 var(--dp-red);
-    transition: transform var(--dur-fast) ease-out, box-shadow var(--dur-fast) ease-out;
-  }
-  .ab-cta::after { content: '→'; font-size: 15px; line-height: 1; }
-  .ab-cta:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--dp-red); }
-  .ab-cta:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--dp-red); }
 
   .ab-menu-toggle {
     @apply hidden bg-transparent cursor-pointer flex-col gap-1 p-2;
@@ -109,7 +100,7 @@ const tag = 'WORKSHOP'
       padding-left: 32px;
     }
     .ab-menu-toggle { @apply flex; }
-    .ab-cta { @apply hidden; }
+    :global(.ab-cta) { @apply hidden; }
     .ab-brand .slash, .ab-brand > span:last-child { @apply hidden; }
   }
 </style>

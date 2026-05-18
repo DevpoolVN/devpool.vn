@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string
+  strip?: string
+  rows?: { key: string; value: string }[]
+  sfx?: string
+}
+
+const { title, strip, rows = [], sfx } = Astro.props
+---
+
+<div class="ticket-wrap">
+  {sfx && <div class="sfx sfx-1">{sfx}</div>}
+  <div class="ticket">
+    {strip && <div class="ticket-strip">{strip}</div>}
+    <div class="ticket-title">{title}</div>
+    {
+      rows.length > 0 && (
+        <div class="ticket-row">
+          {rows.map((r) => (
+            <div>
+              <div class="ticket-key">{r.key}</div>
+              <div class="ticket-value">{r.value}</div>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  @reference '@/styles/global.css';
+  .ticket-wrap { @apply relative; }
+  .ticket {
+    @apply bg-dp-paper text-dp-black p-4 px-6 relative w-full;
+    max-width: 320px;
+    border: 4px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-lg);
+    transform: rotate(1.5deg);
+    animation: slideInRight 0.8s var(--ease-bounce) calc(var(--splash-delay) + 0.4s) both;
+  }
+  .ticket-strip {
+    @apply inline-block bg-dp-black text-dp-paper font-mono font-semibold text-[10px] tracking-[2px] px-3 py-1 mb-3;
+  }
+  .ticket-title {
+    @apply font-display text-lg uppercase text-dp-black;
+    line-height: 1.1;
+  }
+  .ticket-row {
+    @apply grid grid-cols-2 gap-3 mt-3 pt-3;
+    border-top: 2px dashed var(--dp-black);
+  }
+  .ticket-row .ticket-key {
+    @apply font-mono font-semibold text-[9px] tracking-[1.5px] uppercase;
+    color: var(--dim);
+  }
+  .ticket-row .ticket-value {
+    @apply font-utility text-base uppercase text-dp-black mt-0.5;
+  }
+  .sfx {
+    @apply absolute font-display text-[44px] bg-dp-yellow text-dp-black px-4 py-2 z-3;
+    border: 3px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-md);
+  }
+  .sfx-1 {
+    top: -82px; right: 8px;
+    transform: rotate(8deg);
+    animation: bounce 1.6s var(--ease-bounce) infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(8deg) scale(1); }
+    50% { transform: rotate(8deg) scale(1.12); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(40px) rotate(1.5deg); }
+    to { opacity: 1; transform: translateX(0) rotate(1.5deg); }
+  }
+
+  @media (max-width: 1023px) {
+    .ticket { max-width: 100%; transform: rotate(-1.5deg); }
+    .sfx-1 { @apply hidden; }
+  }
+</style>

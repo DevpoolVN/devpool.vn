@@ -47,3 +47,23 @@
   --w-full: 1200px;
   --w-card: 880px;
 }
+
+/* Button offset shadows — used by Button component variants */
+@utility shadow-dp-btn-red {
+  box-shadow: 5px 5px 0 var(--dp-red);
+}
+@utility shadow-dp-btn-red-hover {
+  box-shadow: 7px 7px 0 var(--dp-red);
+}
+@utility shadow-dp-btn-red-active {
+  box-shadow: 1px 1px 0 var(--dp-red);
+}
+@utility shadow-dp-btn-black {
+  box-shadow: 5px 5px 0 var(--dp-black);
+}
+@utility shadow-dp-btn-black-hover {
+  box-shadow: 7px 7px 0 var(--dp-black);
+}
+@utility shadow-dp-btn-black-active {
+  box-shadow: none;
+}

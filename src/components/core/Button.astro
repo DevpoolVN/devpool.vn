@@ -1,0 +1,59 @@
+---
+import { cn } from '@/lib/cn'
+
+interface Props {
+  href?: string
+  type?: 'button' | 'submit' | 'reset'
+  variant?: 'default' | 'secondary'
+  size?: 'sm' | 'md' | 'lg'
+  arrow?: boolean
+  disabled?: boolean
+  class?: string
+}
+
+const buttonVariants = {
+  base: 'inline-flex items-center gap-2 font-display tracking-[1px] uppercase no-underline cursor-pointer border-[3px] border-dp-black bg-dp-yellow text-dp-black transition-[transform,box-shadow] duration-150 ease-out hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[3px] active:translate-y-[3px] disabled:pointer-events-none disabled:opacity-50',
+  variant: {
+    default:
+      'shadow-dp-btn-red hover:shadow-dp-btn-red-hover active:shadow-dp-btn-red-active',
+    secondary:
+      'shadow-dp-btn-black hover:shadow-dp-btn-black-hover active:shadow-dp-btn-black-active',
+  },
+  size: {
+    sm: 'text-[11px] py-2 px-4',
+    md: 'text-[13px] py-3 px-6',
+    lg: 'text-[15px] py-4 px-8',
+  },
+}
+
+const {
+  href,
+  type = 'button',
+  variant = 'default',
+  size = 'md',
+  arrow = false,
+  disabled = false,
+  class: className,
+} = Astro.props
+
+const classes = cn(
+  buttonVariants.base,
+  buttonVariants.variant[variant],
+  buttonVariants.size[size],
+  className,
+)
+---
+
+{
+  href ? (
+    <a href={href} class={classes}>
+      <slot />
+      {arrow && <span class="text-[15px] leading-none" aria-hidden="true">→</span>}
+    </a>
+  ) : (
+    <button type={type} class={classes} disabled={disabled}>
+      <slot />
+      {arrow && <span class="text-[15px] leading-none" aria-hidden="true">→</span>}
+    </button>
+  )
+}

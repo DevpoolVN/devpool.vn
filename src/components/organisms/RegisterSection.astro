@@ -1,4 +1,7 @@
 ---
+import Button from '@/components/core/Button.astro'
+import FormField from '@/components/molecules/FormField.astro'
+
 interface Props {
   id?: string
   kicker?: string
@@ -30,34 +33,42 @@ const {
 
     <form class="reg-form" id="regForm" novalidate action={action} method="post">
       <div class="row2">
-        <div class="field">
-          <label for="f-name">Họ và tên<span class="req">*</span></label>
-          <input id="f-name" name="fullname" type="text" placeholder="Nguyễn Văn A" required autocomplete="name" />
-        </div>
-        <div class="field">
-          <label for="f-email">Email<span class="req">*</span></label>
-          <input id="f-email" name="email" type="email" placeholder="your@email.com" required autocomplete="email" />
-        </div>
+        <FormField id="f-name" name="fullname" label="Họ và tên" placeholder="Nguyễn Văn A" required autocomplete="name" />
+        <FormField id="f-email" name="email" type="email" label="Email" placeholder="your@email.com" required autocomplete="email" />
       </div>
 
       <div class="row2">
-        <div class="field">
-          <label for="f-phone">Số điện thoại<span class="req">*</span></label>
-          <input id="f-phone" name="phone" type="tel" placeholder="0xx xxx xxxx" required autocomplete="tel" inputmode="tel" />
-          <div class="field-hint">Nhắc lịch 1 ngày trước event.</div>
-        </div>
-        <div class="field">
-          <label for="f-org">Trường / Công ty<span class="req">*</span></label>
-          <input id="f-org" name="org" type="text" placeholder="VD: Đại học X / Công ty Y" required autocomplete="organization" />
-        </div>
+        <FormField
+          id="f-phone"
+          name="phone"
+          type="tel"
+          label="Số điện thoại"
+          placeholder="0xx xxx xxxx"
+          required
+          autocomplete="tel"
+          inputmode="tel"
+          hint="Nhắc lịch 1 ngày trước event."
+        />
+        <FormField
+          id="f-org"
+          name="org"
+          label="Trường / Công ty"
+          placeholder="VD: Đại học X / Công ty Y"
+          required
+          autocomplete="organization"
+        />
       </div>
 
       <div class="row1">
-        <div class="field">
-          <label for="f-q">Câu hỏi cho speaker <span class="opt">(không bắt buộc)</span></label>
-          <textarea id="f-q" name="question" placeholder="VD: Bạn xử lý như thế nào khi gặp tình huống X?"></textarea>
-          <div class="field-hint">Câu hay sẽ được ưu tiên lên ghế nóng Q&amp;A.</div>
-        </div>
+        <FormField
+          id="f-q"
+          name="question"
+          type="textarea"
+          label="Câu hỏi cho speaker"
+          placeholder="VD: Bạn xử lý như thế nào khi gặp tình huống X?"
+          optional
+          hint="Câu hay sẽ được ưu tiên lên ghế nóng Q&amp;A."
+        />
       </div>
 
       <label class="cb">
@@ -67,7 +78,7 @@ const {
 
       <div class="reg-submit">
         {eventCode && <div class="note">★ MÃ EVENT · {eventCode}</div>}
-        <button class="btn btn-paper btn-lg" type="submit">{submitLabel}</button>
+        <Button type="submit" size="lg">{submitLabel}</Button>
       </div>
     </form>
   </div>
@@ -108,29 +119,7 @@ const {
     grid-template-columns: 1fr 1fr;
   }
   .reg-form .row1 { @apply mb-4; }
-  .field label {
-    @apply block font-sans text-[13px] font-bold text-dp-paper mb-2;
-  }
-  .field label .req { @apply text-dp-red-soft ml-0.5; }
-  .field label .opt { @apply font-normal text-[11px] text-dp-paper opacity-55; }
-  .field input,
-  .field textarea,
-  .field select {
-    @apply w-full font-sans text-sm p-3 bg-dp-paper text-dp-black;
-    border: 3px solid var(--dp-paper);
-    box-shadow: var(--shadow-dp-sm-red);
-    transition: transform var(--dur-fast) ease-out, box-shadow var(--dur-fast) ease-out;
-  }
-  .field textarea { min-height: 110px; resize: vertical; }
-  .field input:focus,
-  .field textarea:focus,
-  .field select:focus {
-    @apply outline-none;
-    box-shadow: var(--shadow-dp-md);
-    transform: translate(-1px, -1px);
-    border-color: var(--dp-red);
-  }
-  .field-hint { @apply font-sans text-xs italic text-dp-paper opacity-65 mt-1; }
+
   .cb {
     @apply flex items-start gap-2 cursor-pointer text-[13px] text-dp-paper mb-4 font-sans;
     line-height: 1.4;
@@ -157,20 +146,6 @@ const {
   .reg-submit .note {
     @apply font-mono font-semibold text-[11px] tracking-[1px] text-dp-red-soft;
   }
-
-  /* Submit button — only used here */
-  .btn {
-    @apply inline-flex items-center gap-2 font-display text-[13px] tracking-[1px] uppercase cursor-pointer no-underline py-3 px-6 bg-dp-yellow text-dp-black;
-    border: 3px solid var(--dp-black);
-    box-shadow: 5px 5px 0 var(--dp-black);
-    transition: transform var(--dur-fast) ease-out, box-shadow var(--dur-fast) ease-out;
-  }
-  .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--dp-black); }
-  .btn:active { transform: translate(3px, 3px); box-shadow: none; }
-  .btn-paper { box-shadow: 5px 5px 0 var(--dp-red); }
-  .btn-paper:hover { box-shadow: 7px 7px 0 var(--dp-red); }
-  .btn-paper:active { box-shadow: 1px 1px 0 var(--dp-red); }
-  .btn-lg { @apply text-[15px] py-4 px-8; }
 
   @media (max-width: 1023px) {
     .reg-wrap { @apply px-6 py-12; }

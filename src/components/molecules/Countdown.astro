@@ -1,0 +1,58 @@
+---
+interface Props {
+  to: string
+  label?: string
+}
+
+const { to, label = 'CÒN' } = Astro.props
+---
+
+<div class="countdown" aria-live="polite" aria-label="Countdown" data-cd={to}>
+  <span class="cd-label">{label}</span>
+  <div class="cd-item"><b data-cd-d>--</b><i>NGÀY</i></div>
+  <div class="cd-item"><b data-cd-h>--</b><i>GIỜ</i></div>
+  <div class="cd-item"><b data-cd-m>--</b><i>PHÚT</i></div>
+</div>
+
+<script is:inline>
+  (function(){
+    const root = document.querySelector('[data-cd]');
+    if (!root) return;
+    const target = new Date(root.getAttribute('data-cd')).getTime();
+    if (Number.isNaN(target)) return;
+    const d = root.querySelector('[data-cd-d]');
+    const h = root.querySelector('[data-cd-h]');
+    const m = root.querySelector('[data-cd-m]');
+    function tick(){
+      const diff = Math.max(0, target - Date.now());
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      if (d) d.textContent = String(days).padStart(2,'0');
+      if (h) h.textContent = String(hours).padStart(2,'0');
+      if (m) m.textContent = String(mins).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>
+
+<style>
+  @reference '@/styles/global.css';
+  .countdown {
+    @apply flex items-stretch flex-wrap gap-2 mb-6;
+    animation: fadeUp 0.7s ease-out calc(var(--splash-delay) + 0.45s) both;
+  }
+  .cd-label {
+    @apply flex items-center font-mono font-semibold text-[11px] uppercase tracking-[2px] text-dp-paper pr-2;
+  }
+  .cd-item {
+    @apply flex flex-col items-center justify-center bg-dp-black px-3 py-2;
+    min-width: 64px;
+    border: 2.5px solid var(--dp-paper);
+  }
+  .cd-item b { @apply font-display text-[22px] text-dp-paper leading-none; }
+  .cd-item i {
+    @apply not-italic font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-yellow mt-1;
+  }
+</style>
