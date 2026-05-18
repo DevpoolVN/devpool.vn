@@ -1,0 +1,119 @@
+---
+import '@/core/styles/global.css'
+
+import { SEO } from 'astro-seo'
+import { ClientRouter } from 'astro:transitions'
+
+import { SITE } from '@/shared/config/site'
+
+interface Props {
+  title?: string
+  description?: string
+  image?: string
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image = '/og-default.png',
+} = Astro.props
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
+
+const siteGraph = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: `${SITE.url}/`,
+  name: SITE.title,
+  description: SITE.description,
+}
+---
+
+<!doctype html>
+<html lang="vi" style="scroll-padding-top:79px;scroll-behavior:smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <SEO
+      title={fullTitle}
+      description={description}
+      canonical={canonicalURL.toString()}
+      openGraph={{
+        basic: {
+          title: fullTitle,
+          type: 'website',
+          image: image,
+        },
+        optional: {
+          description: description,
+          siteName: SITE.title,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: fullTitle,
+        description: description,
+        image: image,
+      }}
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Anton&family=Patrick+Hand&family=Be+Vietnam+Pro:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(siteGraph)} is:inline />
+
+    <ClientRouter />
+
+    {/* No-FOUC theme bootstrap — sets the html class before paint */}
+    <script is:inline>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = stored === 'dark' || (!stored && prefersDark)
+          if (dark) document.documentElement.classList.add('dark')
+        } catch (e) {
+          /* noop */
+        }
+      })()
+    </script>
+  </head>
+  <body
+    id="top"
+    class="flex min-h-screen flex-col font-sans text-dp-black bg-dp-paper leading-relaxed"
+    style="background-image:radial-gradient(circle,rgba(10,10,10,.07) 1px,transparent 1.5px);background-size:18px 18px"
+  >
+    {/* Brand mask sprite — reused via <use href="#dp-mask"/> */}
+    <svg width="0" height="0" class="absolute" aria-hidden="true">
+      <symbol id="dp-mask" viewBox="0 0 750 750">
+        <path class="fill-dp-black" d="M705,375c0,182-148,330-330,330S45,557,45,375C45,193,193,45,375,45S705,193,705,375z"/>
+        <path class="fill-dp-red" d="M375,78.3C209.7,78.3,75.8,211.1,75.8,375s134,296.7,299.2,296.7c165.3,0,299.2-132.8,299.2-296.7S540.3,78.3,375,78.3z M147.3,375c0-103.6,71.2-191.1,167.7-217.2v434.5C218.5,566.1,147.3,478.6,147.3,375z M435,592.2V157.8c96.5,26.1,167.7,113.6,167.7,217.2S531.5,566.1,435,592.2z"/>
+        <path class="fill-dp-paper" d="M287.6,427.5c-55,84.2-114.6-22.1-118.5-75.4L287.6,427.5z M456.9,427.8c52.1,86.1,115.3-18.2,121-71.3L456.9,427.8z"/>
+      </symbol>
+    </svg>
+    <slot />
+    {/* Re-apply theme after view transition swaps — html element is reused but be safe */}
+    <script is:inline>
+      document.addEventListener('astro:after-swap', function () {
+        try {
+          var stored = localStorage.getItem('theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var dark = stored === 'dark' || (!stored && prefersDark)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {
+          /* noop */
+        }
+      })
+    </script>
+  </body>
+</html>

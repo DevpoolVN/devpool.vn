@@ -1,0 +1,95 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { cn } from '@/core/utils/cn'
+
+const buttonVariants = cva(
+  'dp-press dp-bordered dp-label-impact inline-flex items-center gap-2 no-underline cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 focus-visible:[outline:3px_solid_theme(colors.dp-yellow)] focus-visible:[outline-offset:2px] disabled:opacity-40 disabled:pointer-events-none disabled:cursor-not-allowed disabled:shadow-none aria-busy:cursor-progress [&_svg]:h-5 [&_svg]:w-5 [&_svg:not(.animate-spin)]:[stroke-width:2.5]',
+  {
+    variants: {
+      variant: {
+        primary:
+          'bg-dp-red text-dp-paper shadow-dp-sm hover:shadow-dp-md active:shadow-none',
+        yellow:
+          'bg-dp-yellow text-dp-black shadow-dp-sm hover:shadow-dp-md active:shadow-none',
+        secondary:
+          'bg-dp-cream text-dp-black shadow-dp-sm hover:shadow-dp-md active:shadow-none',
+        ghost:
+          'bg-transparent text-dp-black shadow-none hover:bg-dp-paper hover:shadow-none active:bg-dp-paper active:shadow-none',
+        dark: 'bg-dp-black text-dp-paper shadow-dp-sm hover:shadow-dp-md active:shadow-none',
+      },
+      size: {
+        sm: 'text-dp-sm min-h-9 px-4 py-2',
+        md: 'text-dp-base min-h-11 px-6 py-3',
+        lg: 'text-dp-md min-h-13 px-8 py-4',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+    },
+  },
+)
+
+interface Props extends VariantProps<typeof buttonVariants> {
+  href?: string
+  type?: 'button' | 'submit' | 'reset'
+  name?: string
+  value?: string
+  form?: string
+  arrow?: boolean
+  disabled?: boolean
+  loading?: boolean
+  'aria-label'?: string
+  class?: string
+}
+
+const {
+  href,
+  type = 'button',
+  name,
+  value,
+  form,
+  variant,
+  size,
+  arrow = false,
+  disabled = false,
+  loading = false,
+  'aria-label': ariaLabel,
+  class: className,
+} = Astro.props
+
+const isDisabled = disabled || loading
+const Tag = href ? 'a' : 'button'
+const tagProps = href
+  ? { href, 'aria-disabled': isDisabled || undefined }
+  : { type, name, value, form, disabled: isDisabled }
+---
+
+<Tag
+  class={cn(buttonVariants({ variant, size, className }))}
+  aria-busy={loading || undefined}
+  aria-label={ariaLabel}
+  {...tagProps}
+>
+  {
+    loading && (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        class="animate-spin"
+      >
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25" />
+        <path
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          class="opacity-75"
+        />
+      </svg>
+    )
+  }
+  <slot />
+  {arrow && !loading && <span class="text-dp-md leading-none" aria-hidden="true">→</span>}
+</Tag>

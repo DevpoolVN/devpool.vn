@@ -1,0 +1,77 @@
+---
+import Button from '@/core/components/Button.astro'
+import Container from '@/core/components/Container.astro'
+import { CTA, NAV, SITE } from '@/shared/config/site'
+
+const tag = 'WORKSHOP'
+
+const burgerSpan = 'block bg-dp-paper w-5 h-[2.5px] transition-[transform,opacity] duration-fast ease-out'
+---
+
+<nav
+  class="sticky top-0 z-[100] bg-dp-black text-dp-paper py-3 border-b-[6px] border-dp-red"
+  aria-label="Main"
+  transition:persist
+>
+  <Container class="flex justify-between items-center gap-4">
+    <a
+      href="#top"
+      class="font-display text-dp-lg tracking-dp-tight flex items-center gap-2 text-dp-paper no-underline"
+      aria-label={`${SITE.title} Workshop`}
+    >
+      <span class="inline-flex items-center leading-none font-display [&_svg]:w-[1em] [&_svg]:h-[1em] [&_svg]:shrink-0">
+        DEVP<svg aria-hidden="true"><use href="#dp-mask"/></svg><svg aria-hidden="true"><use href="#dp-mask"/></svg>L
+      </span>
+      <span class="hidden mx-1 text-dp-red-soft lg:inline">/</span>
+      <span class="hidden lg:inline">{tag}</span>
+    </a>
+
+    <ul
+      id="ab-menu"
+      class="hidden [&.open]:flex absolute flex-col bg-dp-black p-0 gap-0 list-none m-0 left-0 right-0 top-[calc(100%+6px)] border-b-[6px] border-dp-red
+             divide-y divide-dp-paper-faint
+             lg:static lg:flex lg:flex-row lg:gap-2 lg:bg-transparent lg:left-auto lg:right-auto lg:border-b-0 lg:divide-y-0
+             [&_a]:block [&_a]:text-left [&_a]:text-dp-paper [&_a]:px-6 [&_a]:py-6 [&_a]:font-utility [&_a]:text-dp-base [&_a]:tracking-dp-wide [&_a]:uppercase [&_a]:no-underline
+             [&_a]:transition-[color,padding-left,border-color] [&_a]:duration-fast [&_a]:ease-out
+             lg:[&_a]:inline-block lg:[&_a]:font-mono lg:[&_a]:font-semibold lg:[&_a]:text-dp-sm lg:[&_a]:tracking-dp-mono lg:[&_a]:px-3 lg:[&_a]:py-2
+             lg:[&_a]:border-b-2 lg:[&_a]:border-b-transparent
+             [&_a:hover]:text-dp-red-soft [&_a:hover]:pl-8
+             [&_a[aria-current=page]]:text-dp-red-soft [&_a[aria-current=page]]:pl-8
+             lg:[&_a:hover]:border-b-dp-red-soft lg:[&_a:hover]:pl-3
+             lg:[&_a[aria-current=page]]:border-b-dp-red-soft lg:[&_a[aria-current=page]]:pl-3"
+    >
+      {NAV.map((item) => <li class="block"><a href={item.href}>{item.label}</a></li>)}
+    </ul>
+
+    <button
+      id="ab-menu-toggle"
+      class="flex bg-transparent cursor-pointer flex-col gap-1 p-2 lg:hidden border-2 border-dp-paper"
+      aria-label="Mở menu"
+      aria-expanded="false"
+      aria-controls="ab-menu"
+    >
+      <span class={`${burgerSpan} [[aria-expanded=true]_&]:translate-y-[6.5px] [[aria-expanded=true]_&]:rotate-45`}></span>
+      <span class={`${burgerSpan} [[aria-expanded=true]_&]:opacity-0`}></span>
+      <span class={`${burgerSpan} [[aria-expanded=true]_&]:-translate-y-[6.5px] [[aria-expanded=true]_&]:-rotate-45`}></span>
+    </button>
+
+    <Button href={CTA.href} variant="yellow" arrow class="hidden lg:inline-flex">{CTA.label}</Button>
+  </Container>
+</nav>
+
+<script is:inline>
+  (function(){
+    const btn = document.getElementById('ab-menu-toggle');
+    const menu = document.getElementById('ab-menu');
+    if (!btn || !menu || btn.dataset.bound) return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }));
+  })();
+</script>

@@ -1,0 +1,37 @@
+---
+import Badge from '@/core/components/Badge.astro'
+
+interface Props {
+  time: string
+  duration: string
+  title: string
+  tag?: string
+  tagVariant?: 'default' | 'yellow'
+  description: string
+  by?: string
+}
+
+const { time, duration, title, tag, tagVariant = 'default', description, by } = Astro.props
+
+const tagBadgeVariant = tagVariant === 'yellow' ? 'default' : 'red'
+---
+
+<div
+  class="dp-press dp-bordered grid p-4 bg-dp-paper text-dp-black
+         gap-3 grid-cols-[80px_1fr] lg:gap-6 lg:grid-cols-[140px_1fr]
+         shadow-dp-sm-red
+         hover:-translate-x-0.5 hover:-translate-y-0.5"
+>
+  <div>
+    <div class="font-display text-dp-lg text-dp-red leading-none">{time}</div>
+    <Badge variant="outline" class="mt-2 text-dp-dim">{duration}</Badge>
+  </div>
+  <div>
+    <h3 class="dp-heading-utility text-dp-lg mb-1 flex items-center flex-wrap gap-2">
+      {title}
+      {tag && <Badge variant={tagBadgeVariant}>{tag}</Badge>}
+    </h3>
+    <div class="dp-desc">{description}</div>
+    {by && <div class="dp-label-mono text-dp-xs text-dp-red mt-2">{by}</div>}
+  </div>
+</div>

@@ -1,0 +1,55 @@
+@theme {
+  /* Brand palette */
+  --color-dp-red: #c8102e;
+  --color-dp-red-deep: #7a0a1c;
+  --color-dp-red-soft: #e63b52;
+  --color-dp-black: #0a0a0a;
+  --color-dp-yellow: #ffe600;
+  --color-dp-yellow-deep: #d4be00;
+  --color-dp-cream: #f4efe6;
+  --color-dp-paper: #fbf7ef;
+  --color-dp-dim: #6b6b6b;
+
+  /* Paper-on-black ghost tones — gom 7 mức color-mix Footer về 3 nấc. */
+  --color-dp-paper-faint: color-mix(in srgb, #fbf7ef 10%, #0a0a0a);   /* covers 6, 10, 12% */
+  --color-dp-paper-soft: color-mix(in srgb, #fbf7ef 40%, #0a0a0a);    /* covers 25, 40, 45% */
+  --color-dp-paper-strong: color-mix(in srgb, #fbf7ef 70%, #0a0a0a);  /* covers 70% */
+
+  /* Hard-offset shadows */
+  --shadow-dp-xs: 2px 2px 0 #0a0a0a;
+  --shadow-dp-sm: 3px 3px 0 #0a0a0a;
+  --shadow-dp-md: 6px 6px 0 #0a0a0a;
+  --shadow-dp-lg: 10px 10px 0 #0a0a0a;
+  --shadow-dp-sm-red: 3px 3px 0 #c8102e;
+  --shadow-dp-sm-yellow-deep: 3px 3px 0 #d4be00;
+  --shadow-dp-xl-red: 6px 6px 0 #c8102e, 12px 12px 0 #0a0a0a;
+  --shadow-dp-xl-yellow: 8px 8px 0 #ffe600, 16px 16px 0 #0a0a0a;
+
+  /* Fonts */
+  --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-display: 'Bungee', system-ui;
+  --font-utility: 'Anton', system-ui;
+  --font-hand: 'Patrick Hand', cursive;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Caps tracking scale — px-based để giữ "khắc cứng" theo brand. */
+  --tracking-dp-tight: 1px;
+  --tracking-dp-mono: 1.5px;
+  --tracking-dp-wide: 2px;
+  --tracking-dp-extra: 3px;
+
+  /* Type scale brand — gom 9 size cũ về 6 mức. Áp dụng nhất quán cho mọi
+     text-[Xpx] / text-xs / text-sm / text-base / text-lg / text-xl. */
+  --text-dp-xs: 10px;     /* covers 9, 10 */
+  --text-dp-sm: 11px;     /* covers 11, 12, text-xs */
+  --text-dp-base: 13px;   /* covers 13, text-sm */
+  --text-dp-md: 15px;     /* covers 15, text-base */
+  --text-dp-lg: 20px;     /* covers 18 (text-lg), 20, 22, text-xl */
+  --text-dp-xl: 44px;     /* ticket display */
+
+  /* Leading scale — 4 nấc bao trùm mọi leading-[X] arbitrary. */
+  --leading-dp-display: 1.1;   /* tight display */
+  --leading-dp-heading: 1.2;   /* covers 1.15, 1.2 */
+  --leading-dp-body: 1.6;      /* covers 1.55, 1.6, 1.65 */
+  --leading-dp-loose: 1.75;    /* covers 1.7, 1.8 */
+}

@@ -1,0 +1,55 @@
+---
+import Container from '@/core/components/Container.astro'
+import { takeaways } from '../data/takeaways'
+
+import SectionHead from './SectionHead.astro'
+---
+
+<section
+  id="about"
+  class="dp-section relative overflow-hidden bg-dp-paper border-b-[6px] border-dp-red"
+>
+  <Container>
+    <SectionHead
+      num="01 · GIỚI THIỆU"
+      title="TẠI SAO <span class='text-dp-red'>ĐÁNG</span> ĐẾN"
+      description="Không slide marketing. Không hô khẩu hiệu. 3 engineer, 3 talk, 1 chủ đề thật."
+    />
+
+    <div class="grid gap-12 items-start grid-cols-1 lg:grid-cols-[1fr_1.4fr]">
+      <div class="dp-card-featured p-8 -rotate-1">
+        <span class="block mb-3 w-12 h-12" aria-hidden="true">
+          <svg class="w-full h-full block" viewBox="0 0 750 750"><use href="#dp-mask"/></svg>
+        </span>
+        <div class="font-utility text-dp-lg uppercase leading-dp-heading">
+          PROMPT LÀ <span class="text-dp-yellow">DỄ</span>. SHIP MỚI <span class="text-dp-yellow">KHÓ</span>.
+        </div>
+        <div class="dp-label-mono text-dp-sm text-dp-red-soft mt-4">— VIBE CODING 2026 · TECH SEMINAR</div>
+      </div>
+
+      <div>
+        <h2 class="dp-heading-display mb-6 text-[clamp(28px,4vw,44px)]">
+          AI VIẾT CODE. <span class="text-dp-red">BẠN</span> GIỮ
+          <span class="bg-dp-yellow text-dp-black px-2 [-webkit-box-decoration-break:clone] [box-decoration-break:clone]">TAY LÁI</span>.
+        </h2>
+        <p class="text-dp-md mb-4 text-dp-black leading-dp-body [&_strong]:bg-dp-red [&_strong]:text-dp-paper [&_strong]:px-1">
+          <strong>Vibe Coding</strong> là tech seminar 2 tiếng tại lab AIT, FPT Đà Nẵng. 1 chủ đề
+          duy nhất: code cùng AI mà vẫn cầm trịch được <strong>production</strong> — không bị agent
+          dắt mũi.
+        </p>
+        <ul class="list-none flex flex-col gap-3 mt-6">
+          {takeaways.map((t) => (
+            <li class="dp-bordered-sm grid items-start gap-4 p-4 bg-dp-cream grid-cols-[36px_1fr]">
+              <div class="dp-bordered-sm flex items-center justify-center bg-dp-red text-dp-paper font-display text-dp-base w-8 h-8">{t.index}</div>
+              <div>
+                <h3 class="dp-heading-utility text-dp-md text-dp-black">{t.title}</h3>
+                <div class="dp-desc mt-1">{t.description}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>
+
