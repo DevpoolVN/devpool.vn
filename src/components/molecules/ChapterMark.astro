@@ -1,0 +1,58 @@
+---
+interface Props {
+  arrow?: string
+  text: string
+  side?: 'left' | 'right'
+}
+
+const { arrow = '↓ NEXT', text, side = 'right' } = Astro.props
+---
+
+<div class="section-bridge" aria-hidden="true">
+  <div class:list={['chapter-mark', side === 'left' && 'mark-left']}>
+    <svg class="ch-mask" viewBox="0 0 750 750" aria-hidden="true"><use href="#dp-mask"/></svg>
+    <span class="ch-info">
+      <span class="ch-arrow">{arrow}</span>
+      <span class="ch-text">{text}</span>
+    </span>
+  </div>
+</div>
+
+<style>
+  @reference '@/styles/global.css';
+  .section-bridge {
+    position: relative; height: 0; z-index: 10;
+    max-width: var(--w-full); margin: 0 auto;
+    pointer-events: none;
+  }
+  .chapter-mark {
+    @apply absolute flex items-center gap-3 bg-dp-yellow px-6 py-3;
+    border: 3px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-md);
+    top: -58px; right: 48px;
+    transform: rotate(-3deg);
+    pointer-events: auto;
+  }
+  .chapter-mark.mark-left {
+    right: auto; left: 48px;
+    transform: rotate(3deg);
+  }
+  .chapter-mark .ch-mask { @apply block shrink-0; width: 42px; height: 42px; }
+  .chapter-mark .ch-info {
+    @apply flex flex-col gap-1 pl-3;
+    border-left: 2px solid var(--dp-black);
+  }
+  .chapter-mark .ch-arrow { @apply font-display text-base text-dp-red leading-none; }
+  .chapter-mark .ch-text {
+    @apply font-mono font-semibold text-[11px] uppercase tracking-[1.5px] text-dp-black whitespace-nowrap;
+  }
+
+  @media (max-width: 1023px) {
+    .chapter-mark {
+      top: -36px; right: 24px;
+      transform: rotate(-2deg);
+      @apply px-4 py-2;
+    }
+    .chapter-mark .ch-mask { width: 32px; height: 32px; }
+  }
+</style>

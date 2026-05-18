@@ -1,0 +1,72 @@
+---
+interface Props {
+  index: string
+  name: string
+  role: string
+  bio: string
+  avatar?: string
+}
+
+const { index, name, role, bio, avatar } = Astro.props
+---
+
+<article class="spk-card">
+  <div class="spk-avatar">
+    <div class="spk-frame">
+      <span class="spk-tag">{index}</span>
+      {
+        avatar ? (
+          <img class="initials initials--img" src={avatar} alt={name} loading="lazy" />
+        ) : (
+          <svg class="initials initials--svg" viewBox="0 0 750 750" aria-hidden="true"><use href="#dp-mask"/></svg>
+        )
+      }
+    </div>
+  </div>
+  <div class="spk-body">
+    <h3 class="spk-name">{name}</h3>
+    <div class="spk-role">{role}</div>
+    <p class="spk-bio">{bio}</p>
+  </div>
+</article>
+
+<style>
+  @reference '@/styles/global.css';
+  .spk-card {
+    @apply bg-dp-paper overflow-hidden flex flex-col transition-[transform,box-shadow] duration-150 ease-out;
+    border: 3px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-md);
+  }
+  .spk-card:hover { transform: translate(-3px, -3px); box-shadow: var(--shadow-dp-lg); }
+  .spk-avatar {
+    @apply flex items-center justify-center relative py-8;
+    background:
+      radial-gradient(circle, var(--dp-paper) 1.2px, transparent 1.5px) 0 0 / 12px 12px,
+      var(--dp-red);
+    border-bottom: 3px solid var(--dp-black);
+  }
+  .spk-frame {
+    @apply relative block bg-dp-paper;
+    width: 72%; aspect-ratio: 1/1;
+    border: 3px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-sm);
+  }
+  .spk-frame .initials { @apply w-full h-full block; }
+  .initials--img { object-fit: cover; object-position: center 20%; }
+  .initials--svg { padding: 8%; box-sizing: border-box; }
+  .spk-tag {
+    @apply absolute z-2 bg-dp-red text-dp-paper font-mono font-semibold text-[10px] tracking-[2px] uppercase px-2 py-1;
+    top: 0; left: 12px;
+    transform: translate(-33%, -50%);
+    border: 2px solid var(--dp-black);
+  }
+  .spk-body { @apply p-6; }
+  .spk-name {
+    @apply font-display text-[22px] uppercase tracking-[0.5px] mb-2;
+    font-weight: normal; line-height: 1;
+  }
+  .spk-role {
+    @apply font-mono font-semibold text-[11px] uppercase tracking-[1.5px] text-dp-red mb-3;
+  }
+  .spk-bio { @apply text-[13px] text-dp-dim; line-height: 1.6; }
+</style>

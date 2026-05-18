@@ -1,0 +1,255 @@
+---
+interface Props {
+  eyebrow?: string
+  titleLine1: string
+  titleLine2?: string
+  subtitle?: string
+  paragraph?: string
+  meta?: { value: string; label: string }[]
+  ticketTitle?: string
+  ticketStrip?: string
+  ticketRows?: { key: string; value: string }[]
+  countdownTo?: string
+  sfx?: string
+}
+
+const {
+  eyebrow,
+  titleLine1,
+  titleLine2,
+  subtitle,
+  paragraph,
+  meta = [],
+  ticketTitle,
+  ticketStrip,
+  ticketRows = [],
+  countdownTo,
+  sfx = 'BÙM!',
+} = Astro.props
+---
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      {
+        eyebrow && (
+          <div class="hero-tag-row">
+            <span class="hero-tag paper">{eyebrow}</span>
+          </div>
+        )
+      }
+      <h1>
+        {titleLine1}{titleLine2 && (<><br /><span class="hero-highlight">{titleLine2}</span></>)}
+      </h1>
+      {subtitle && <div class="hero-sub">{subtitle}</div>}
+      {paragraph && <p set:html={paragraph} />}
+
+      {
+        countdownTo && (
+          <div class="countdown" aria-live="polite" aria-label="Countdown" data-cd={countdownTo}>
+            <span class="cd-label">CÒN</span>
+            <div class="cd-item"><b data-cd-d>--</b><i>NGÀY</i></div>
+            <div class="cd-item"><b data-cd-h>--</b><i>GIỜ</i></div>
+            <div class="cd-item"><b data-cd-m>--</b><i>PHÚT</i></div>
+          </div>
+        )
+      }
+
+      {
+        meta.length > 0 && (
+          <div class="hero-meta">
+            {meta.map((m) => (
+              <span><b>{m.value}</b> {m.label}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <div class="hero-right">
+      <div class="ticket-wrap">
+        {sfx && <div class="sfx sfx-1">{sfx}</div>}
+        {
+          ticketTitle && (
+            <div class="ticket">
+              {ticketStrip && <div class="ticket-strip">{ticketStrip}</div>}
+              <div class="ticket-title">{ticketTitle}</div>
+              {
+                ticketRows.length > 0 && (
+                  <div class="ticket-row">
+                    {ticketRows.map((r) => (
+                      <div>
+                        <div class="ticket-key">{r.key}</div>
+                        <div class="ticket-value">{r.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                )
+              }
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function(){
+    const root = document.querySelector('[data-cd]');
+    if (!root) return;
+    const target = new Date(root.getAttribute('data-cd')).getTime();
+    if (Number.isNaN(target)) return;
+    const d = root.querySelector('[data-cd-d]');
+    const h = root.querySelector('[data-cd-h]');
+    const m = root.querySelector('[data-cd-m]');
+    function tick(){
+      const diff = Math.max(0, target - Date.now());
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      if (d) d.textContent = String(days).padStart(2,'0');
+      if (h) h.textContent = String(hours).padStart(2,'0');
+      if (m) m.textContent = String(mins).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>
+
+<style>
+  @reference '@/styles/global.css';
+  .hero {
+    @apply relative overflow-hidden text-dp-paper py-24 px-6;
+    background:
+      radial-gradient(circle, var(--dp-black) 1.2px, transparent 1.5px) 0 0 / 10px 10px,
+      var(--dp-red);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 56px;
+    background: repeating-linear-gradient(-45deg, var(--dp-black) 0 14px, var(--dp-yellow) 14px 28px);
+    clip-path: polygon(0 85%, 100% 40%, 100% 100%, 0 100%);
+  }
+  .hero-grid {
+    max-width: var(--w-full); margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center;
+    position: relative; z-index: 2;
+  }
+  .hero-tag-row { @apply flex gap-2 flex-wrap mb-4; }
+  .hero-tag {
+    @apply inline-block font-mono font-semibold text-[11px] uppercase tracking-[2px] px-3 py-1;
+    background: var(--dp-black); color: var(--dp-paper);
+  }
+  .hero-tag.paper { background: var(--dp-paper); color: var(--dp-black); }
+
+  .hero h1 {
+    @apply font-display uppercase mb-6;
+    font-size: clamp(36px, 5.8vw, 80px);
+    line-height: 1.1; overflow-wrap: break-word;
+  }
+  .hero h1 .hero-highlight {
+    @apply bg-dp-paper text-dp-black px-2;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  }
+  .hero-sub {
+    @apply font-utility text-[22px] tracking-[1px] uppercase text-dp-yellow mb-4;
+  }
+  .hero p {
+    @apply font-sans text-base max-w-130 mb-8;
+    line-height: 1.6;
+  }
+  /* :global() — strong arrives via set:html, no scope hash */
+  .hero p :global(strong) { @apply bg-dp-paper text-dp-black px-1; }
+  .hero-meta {
+    @apply flex flex-wrap gap-6 mt-8 pt-6 font-mono font-semibold text-[11px] uppercase tracking-[1.5px] text-dp-paper;
+    border-top: 2px dashed var(--dp-paper);
+  }
+  .hero-meta b { @apply font-display text-[20px] text-dp-paper mr-1 leading-none; }
+
+  .countdown { @apply flex items-stretch flex-wrap gap-2 mb-6; }
+  .cd-label {
+    @apply flex items-center font-mono font-semibold text-[11px] uppercase tracking-[2px] text-dp-paper pr-2;
+  }
+  .cd-item {
+    @apply flex flex-col items-center justify-center bg-dp-black px-3 py-2;
+    min-width: 64px;
+    border: 2.5px solid var(--dp-paper);
+  }
+  .cd-item b { @apply font-display text-[22px] text-dp-paper leading-none; }
+  .cd-item i {
+    @apply not-italic font-mono font-semibold text-[9px] tracking-[1.5px] uppercase text-dp-yellow mt-1;
+  }
+
+  .hero-right { @apply flex flex-col items-center gap-6; }
+  .ticket {
+    @apply bg-dp-paper text-dp-black p-4 px-6 relative w-full;
+    max-width: 320px;
+    border: 4px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-lg);
+    transform: rotate(1.5deg);
+  }
+  .ticket-strip {
+    @apply inline-block bg-dp-black text-dp-paper font-mono font-semibold text-[10px] tracking-[2px] px-3 py-1 mb-3;
+  }
+  .ticket-title {
+    @apply font-display text-lg uppercase text-dp-black;
+    line-height: 1.1;
+  }
+  .ticket-row {
+    @apply grid grid-cols-2 gap-3 mt-3 pt-3;
+    border-top: 2px dashed var(--dp-black);
+  }
+  .ticket-row .ticket-key {
+    @apply font-mono font-semibold text-[9px] tracking-[1.5px] uppercase;
+    color: var(--dim);
+  }
+  .ticket-row .ticket-value {
+    @apply font-utility text-base uppercase text-dp-black mt-0.5;
+  }
+  .ticket-wrap { @apply relative; }
+  .sfx {
+    @apply absolute font-display text-[44px] bg-dp-yellow text-dp-black px-4 py-2 z-3;
+    border: 3px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-md);
+  }
+  .sfx-1 {
+    top: -82px; right: 8px;
+    transform: rotate(8deg);
+    animation: bounce 1.6s var(--ease-bounce) infinite;
+  }
+
+  /* Entry stagger — wait splash */
+  .hero-tag-row { animation: fadeUp 0.7s ease-out var(--splash-delay) both; }
+  .hero h1 { animation: fadeUp 0.7s ease-out calc(var(--splash-delay) + 0.1s) both; }
+  .hero-sub { animation: fadeUp 0.7s ease-out calc(var(--splash-delay) + 0.25s) both; }
+  .hero p { animation: fadeUp 0.7s ease-out calc(var(--splash-delay) + 0.35s) both; }
+  .countdown { animation: fadeUp 0.7s ease-out calc(var(--splash-delay) + 0.45s) both; }
+  .hero-meta { animation: fadeUp 0.7s ease-out calc(var(--splash-delay) + 0.65s) both; }
+  .ticket { animation: slideInRight 0.8s var(--ease-bounce) calc(var(--splash-delay) + 0.4s) both; }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(8deg) scale(1); }
+    50% { transform: rotate(8deg) scale(1.12); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(40px) rotate(1.5deg); }
+    to { opacity: 1; transform: translateX(0) rotate(1.5deg); }
+  }
+
+  @media (max-width: 1023px) {
+    .hero { @apply px-6 py-12; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-right { @apply items-center; }
+    .ticket { max-width: 100%; transform: rotate(-1.5deg); }
+    .hero::after {
+      height: 16px; bottom: -8px;
+      background: repeating-linear-gradient(-45deg, var(--dp-black) 0 10px, var(--dp-yellow) 10px 20px);
+      border: none;
+    }
+    .hero-tag-row { @apply block; }
+    .hero-tag { @apply block w-full text-[10px] tracking-[1px]; line-height: 1.5; overflow-wrap: break-word; }
+    .sfx-1 { @apply hidden; }
+    .hero-meta { display: grid; grid-template-columns: 1fr 1fr; @apply gap-3 pt-4; }
+    .hero-meta span { @apply text-[11px] justify-self-start; }
+  }
+</style>

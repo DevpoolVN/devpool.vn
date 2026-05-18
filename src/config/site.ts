@@ -1,15 +1,18 @@
 export const SITE = {
-  title: 'Astrolabe',
-  description:
-    'A simple, lightweight Astro 6 + Tailwind v4 starter with a markdown blog. Named for the old instrument that helped travelers find their bearings by the stars.',
-  url: 'https://example.com',
-  email: 'hello@example.com',
-  defaultAuthor: 'default',
-  postsPerPage: 6,
+  title: 'Devpool',
+  description: 'Code smart. Ship hard. Dev community made in Đà Nẵng.',
+  url: 'https://devpool.vn',
+  email: 'hello@devpool.vn',
 } as const
 
 export const NAV = [
-  { label: 'Home', href: '/' },
-  { label: 'Blog', href: '/blog/' },
-  { label: 'About', href: '/about/' },
+  { label: 'GIỚI THIỆU', href: '#about' },
+  { label: 'DIỄN GIẢ', href: '#speakers' },
+  { label: 'LỊCH TRÌNH', href: '#agenda' },
+  { label: 'ĐĂNG KÝ', href: '#register' },
 ] as const
+
+export const CTA = {
+  label: 'ĐĂNG KÝ NGAY',
+  href: '#register',
+} as const

@@ -1,0 +1,54 @@
+---
+import SectionHead from '@/components/molecules/SectionHead.astro'
+import AgendaItem from '@/components/molecules/AgendaItem.astro'
+
+interface Item {
+  time: string
+  duration: string
+  title: string
+  tag?: string
+  tagVariant?: 'default' | 'yellow'
+  description: string
+  by?: string
+}
+
+interface Props {
+  id?: string
+  num: string
+  title: string
+  description?: string
+  items: Item[]
+}
+
+const { id = 'agenda', num, title, description, items } = Astro.props
+---
+
+<section id={id} class="agenda">
+  <div class="agenda-inner">
+    <SectionHead num={num} title={title} description={description} />
+    <div class="timeline">
+      {items.map((i) => <AgendaItem {...i} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference '@/styles/global.css';
+  .agenda {
+    @apply relative overflow-hidden bg-dp-black text-dp-paper py-24 px-6;
+    /* Tint SectionHead via CSS vars (matches dark theme) */
+    --sec-title-color: var(--dp-paper);
+    --sec-num-color: var(--dp-red-soft);
+    --sec-desc-color: var(--dp-red-soft);
+  }
+  .agenda::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, var(--dp-red) 0 24px, var(--dp-paper) 24px 48px);
+  }
+  .agenda-inner { max-width: var(--w-card); @apply mx-auto; }
+  .timeline { @apply flex flex-col gap-3 mt-8; }
+
+  @media (max-width: 1023px) {
+    .agenda { @apply px-6 py-12; }
+  }
+</style>

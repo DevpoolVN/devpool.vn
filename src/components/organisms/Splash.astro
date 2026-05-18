@@ -1,0 +1,91 @@
+---
+interface Props {
+  badge?: string
+  tagline?: string
+  meta?: string[]
+}
+
+const {
+  badge = '★ Workshop',
+  tagline = 'Code smart. Ship hard.',
+  meta = ['v2026.05', 'Vibe Coding', 'Đà Nẵng'],
+} = Astro.props
+---
+
+<div class="splash" aria-hidden="true">
+  <div class="splash-badge">{badge}</div>
+  <span class="splash-wordmark wordmark">
+    DEVP<svg aria-hidden="true"><use href="#dp-mask"/></svg><svg aria-hidden="true"><use href="#dp-mask"/></svg>L
+  </span>
+  <div class="splash-tagline">{tagline}</div>
+  <div class="splash-meta">
+    {
+      meta.map((m, i) => (
+        <>
+          <span>{m}</span>
+          {i < meta.length - 1 && <span class="splash-sep">·</span>}
+        </>
+      ))
+    }
+  </div>
+  <div class="splash-loader" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+<style>
+  @reference '@/styles/global.css';
+  .splash {
+    @apply fixed inset-0 z-1000 flex flex-col items-center justify-center gap-4 bg-dp-black;
+    animation: splashOut 0.6s ease-out 2.4s forwards;
+  }
+  .splash-badge {
+    @apply inline-block bg-dp-red text-dp-paper font-mono font-semibold text-[11px] uppercase px-3 py-1;
+    letter-spacing: 3px;
+    animation: fadeUp 0.5s ease-out 0.2s both;
+  }
+  .splash-wordmark {
+    @apply text-dp-paper;
+    font-size: clamp(48px, 10vw, 96px);
+    animation: splashIn 0.7s var(--ease-bounce);
+  }
+  .splash-tagline {
+    @apply font-hand text-xl text-dp-red-soft;
+    animation: fadeUp 0.5s ease-out 0.5s both;
+  }
+  .splash-meta {
+    @apply flex items-center gap-2 font-mono font-semibold text-[11px] uppercase tracking-[1.5px] mt-3;
+    color: color-mix(in srgb, var(--dp-paper) 55%, var(--dp-black));
+    animation: fadeUp 0.5s ease-out 0.7s both;
+  }
+  .splash-sep { opacity: 0.4; }
+  .splash::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: color-mix(in srgb, var(--dp-paper) 10%, transparent);
+  }
+  .splash::after {
+    content: ''; position: absolute; bottom: 0; left: 0; height: 3px; width: 0;
+    background: var(--dp-red);
+    box-shadow: 0 0 10px var(--dp-red);
+    animation: progressFill 2.4s linear forwards;
+  }
+  .splash-loader {
+    @apply flex gap-2 mt-3;
+    animation: fadeUp 0.5s ease-out 0.9s both;
+  }
+  .splash-loader span {
+    @apply bg-dp-red;
+    width: 8px; height: 8px;
+    animation: loaderPulse 1s infinite ease-in-out;
+  }
+  .splash-loader span:nth-child(2) { animation-delay: 0.2s; }
+  .splash-loader span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes splashIn { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+  @keyframes progressFill { from { width: 0; } to { width: 100%; } }
+  @keyframes loaderPulse {
+    0%, 80%, 100% { transform: scale(0.5); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+</style>

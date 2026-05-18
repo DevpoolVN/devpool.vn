@@ -23,19 +23,13 @@ const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={`${SITE.title} RSS feed`}
-      href="/rss.xml"
-    />
 
     <SEO
       title={fullTitle}
@@ -63,7 +57,7 @@ const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Anton&family=Patrick+Hand&family=Be+Vietnam+Pro:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
@@ -83,7 +77,15 @@ const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
       })()
     </script>
   </head>
-  <body class="flex min-h-screen flex-col">
+  <body id="top" class="flex min-h-screen flex-col">
+    {/* Brand mask sprite — reused via <use href="#dp-mask"/> */}
+    <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+      <symbol id="dp-mask" viewBox="0 0 750 750">
+        <path style="fill:var(--dp-black)" d="M705,375c0,182-148,330-330,330S45,557,45,375C45,193,193,45,375,45S705,193,705,375z"/>
+        <path style="fill:var(--dp-red)" d="M375,78.3C209.7,78.3,75.8,211.1,75.8,375s134,296.7,299.2,296.7c165.3,0,299.2-132.8,299.2-296.7S540.3,78.3,375,78.3z M147.3,375c0-103.6,71.2-191.1,167.7-217.2v434.5C218.5,566.1,147.3,478.6,147.3,375z M435,592.2V157.8c96.5,26.1,167.7,113.6,167.7,217.2S531.5,566.1,435,592.2z"/>
+        <path style="fill:var(--dp-paper)" d="M287.6,427.5c-55,84.2-114.6-22.1-118.5-75.4L287.6,427.5z M456.9,427.8c52.1,86.1,115.3-18.2,121-71.3L456.9,427.8z"/>
+      </symbol>
+    </svg>
     <slot />
     {/* Re-apply theme after view transition swaps — html element is reused but be safe */}
     <script is:inline>
@@ -100,3 +102,44 @@ const fullTitle = title === SITE.title ? title : `${title} — ${SITE.title}`
     </script>
   </body>
 </html>
+
+<style is:global>
+  @reference '@/styles/global.css';
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 79px; }
+  body {
+    @apply font-sans antialiased text-dp-black bg-dp-paper;
+    background-image: radial-gradient(circle, rgba(10, 10, 10, 0.07) 1px, transparent 1.5px);
+    background-size: 18px 18px;
+    line-height: 1.55;
+  }
+
+  /* Brand wordmark — shared by Header brand + Splash centerpiece */
+  .wordmark {
+    @apply inline-flex items-center leading-none font-display;
+  }
+  .wordmark svg { width: 1em; height: 1em; flex-shrink: 0; }
+
+  /* Text highlight classes — injected via set:html in page strings (no scope) */
+  .red { @apply text-dp-red; }
+  .acc { @apply text-dp-red-soft; }
+  .yel { @apply text-dp-yellow; }
+  .yel-bg {
+    @apply bg-dp-yellow text-dp-black px-2;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Shared keyframe used by Splash + Hero entry stagger */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 1023px) {
+    html { scroll-padding-top: 65px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>

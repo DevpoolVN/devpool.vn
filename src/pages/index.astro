@@ -1,88 +1,157 @@
 ---
-import { getCollection } from 'astro:content'
-
-import Button from '@/components/atoms/Button.astro'
-import BlogCard from '@/components/molecules/BlogCard.astro'
+import ChapterMark from '@/components/molecules/ChapterMark.astro'
+import AboutSection from '@/components/organisms/AboutSection.astro'
+import AgendaSection from '@/components/organisms/AgendaSection.astro'
+import Hero from '@/components/organisms/Hero.astro'
+import RegisterSection from '@/components/organisms/RegisterSection.astro'
+import SpeakersSection from '@/components/organisms/SpeakersSection.astro'
+import Splash from '@/components/organisms/Splash.astro'
+import Ticker from '@/components/organisms/Ticker.astro'
 import JsonLD from '@/components/utilities/JsonLD.astro'
 import { SITE } from '@/config/site'
-import { getAuthor } from '@/data/authors'
 import PageLayout from '@/layouts/PageLayout.astro'
 
-const posts = await getCollection('blog', ({ data }) => !data.draft)
-const recentPosts = posts
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3)
+const tickerItems = [
+  'VIBE CODING · 24.05.2026',
+  'PROMPT. SHIP. REPEAT.',
+  'FPT ĐÀ NẴNG · GAMMA 101',
+  '100% FREE',
+  '#VIBECODING2026',
+  'AI WRITES CODE — YOU SHIP IT',
+]
 
-const defaultAuthor = getAuthor(SITE.defaultAuthor)
+const heroMeta = [
+  { value: '3', label: 'Diễn giả' },
+  { value: '3', label: 'Talk' },
+  { value: '2H', label: 'Nội dung' },
+  { value: '0₫', label: 'Phí' },
+]
+
+const ticketRows = [
+  { key: 'Ngày', value: 'CN 24.05.2026' },
+  { key: 'Giờ', value: '14:00–16:00' },
+  { key: 'Địa điểm', value: 'Gamma 101 · FPT ĐN' },
+  { key: 'Phí', value: 'Miễn phí' },
+]
+
+const takeaways = [
+  {
+    index: '01',
+    title: 'Standardizing AI-Assisted Dev',
+    description: 'Convention, review rule, guardrail — để team không mỗi người một kiểu prompt.',
+  },
+  {
+    index: '02',
+    title: 'Harness Engineering for Agents',
+    description: 'Dựng chuồng cho coding agent. Mạnh nhưng không vượt rào, an toàn lên prod.',
+  },
+  {
+    index: '03',
+    title: 'Vibe Coding: Idea → Deployment',
+    description: 'Idea sáng. Prompt trưa. Deploy chiều. Pipeline thật, không demo.',
+  },
+]
+
+const speakers = [
+  {
+    index: 'DIỄN GIẢ 01',
+    name: 'Võ Văn Hiếu',
+    role: 'SWE · AXONACTIVE',
+    bio: 'Engineer chuyên về AI-assisted workflow, đang dẫn dắt việc chuẩn hoá prompt convention cho team product.',
+  },
+  {
+    index: 'DIỄN GIẢ 02',
+    name: 'Đỗ Ngọc Quý',
+    role: 'SWE · ENOSTA',
+    bio: 'Coding agent enthusiast. Tập trung vào harness engineering — dựng chuồng để agent ship được lên prod an toàn.',
+  },
+  {
+    index: 'DIỄN GIẢ 03',
+    name: 'Cao Minh Đức',
+    role: 'DevOps · AXONACTIVE',
+    bio: 'DevOps lead. Pipeline từ idea tới deploy, vibe coding mà vẫn cầm trịch CI/CD.',
+  },
+]
+
+const agenda = [
+  { time: '14:00', duration: '10 PHÚT', title: 'CHECK-IN & OPENING', tag: 'OPEN', description: 'Vào phòng, nhận tag, tìm chỗ. Đến đúng giờ giúp BTC đỡ stress.', by: 'BY · BAN TỔ CHỨC' },
+  { time: '14:10', duration: '30 PHÚT', title: 'Standardizing AI-Assisted Development', tag: 'TALK 01', tagVariant: 'yellow' as const, description: 'Convention, review rule, guardrail. Để code cùng AI mà team vẫn nhất quán.', by: 'BY · VÕ VĂN HIẾU' },
+  { time: '14:40', duration: '30 PHÚT', title: 'Harness Engineering for Coding Agents', tag: 'TALK 02', tagVariant: 'yellow' as const, description: 'Dựng chuồng cho coding agent. Mạnh nhưng không vượt rào, ship được lên prod.', by: 'BY · ĐỖ NGỌC QUÝ' },
+  { time: '15:10', duration: '30 PHÚT', title: 'Vibe Coding: From Idea to Deployment', tag: 'TALK 03', tagVariant: 'yellow' as const, description: 'Idea sáng → prompt trưa → deploy chiều. Pipeline thật, không slide demo.', by: 'BY · CAO MINH ĐỨC' },
+  { time: '15:40', duration: '15 PHÚT', title: 'Q&A & PANEL', tag: 'LIVE', description: '3 speaker lên ghế nóng. Câu hỏi gửi trước qua form được đọc ưu tiên.', by: 'BY · TẤT CẢ DIỄN GIẢ' },
+  { time: '15:55', duration: '5 PHÚT', title: 'CLOSING & GROUP PHOTO', description: 'Cảm ơn, group photo, hashtag, về. Hẹn số sau.', by: 'BY · BAN TỔ CHỨC' },
+]
 
 const siteGraph = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'WebSite',
-      '@id': `${SITE.url}/#website`,
-      url: `${SITE.url}/`,
-      name: SITE.title,
-      description: SITE.description,
-      publisher: { '@id': `${SITE.url}/authors/${defaultAuthor.slug}/#person` },
-    },
-    {
-      '@type': 'Person',
-      '@id': `${SITE.url}/authors/${defaultAuthor.slug}/#person`,
-      name: defaultAuthor.name,
-      url: `${SITE.url}/authors/${defaultAuthor.slug}/`,
-      description: defaultAuthor.bio,
-      ...(defaultAuthor.links.length > 0 && {
-        sameAs: defaultAuthor.links
-          .filter((l) => l.href.startsWith('http'))
-          .map((l) => l.href),
-      }),
-    },
-  ],
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: `${SITE.url}/`,
+  name: SITE.title,
+  description: SITE.description,
 }
 ---
 
 <PageLayout>
   <JsonLD data={siteGraph} />
 
-  <section class="container mx-auto px-6 py-24 md:px-8 md:py-32">
-    <div class="mx-auto max-w-3xl text-center">
-      <h1 class="mb-6 font-serif text-4xl font-bold md:text-6xl">
-        {SITE.title}
-      </h1>
-      <p class="text-muted mb-8 text-lg leading-relaxed md:text-xl">
-        {SITE.description}
-      </p>
-      <Button href="/blog/" variant="primary" size="lg">Read the blog</Button>
-    </div>
-  </section>
+  <Splash />
 
-  {
-    recentPosts.length > 0 && (
-      <section class="bg-surface-alt">
-        <div class="container mx-auto px-6 py-20 md:px-8">
-          <div class="mb-12 flex items-end justify-between">
-            <h2 class="font-serif text-3xl font-bold md:text-4xl">Recent posts</h2>
-            <a href="/blog/" class="text-accent hover:text-accent-dark font-medium">
-              View all →
-            </a>
-          </div>
+  <Ticker items={tickerItems} />
 
-          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {recentPosts.map((post) => (
-              <BlogCard
-                title={post.data.title}
-                description={post.data.description}
-                href={`/blog/${post.id}/`}
-                date={post.data.pubDate}
-                authorSlug={post.data.author}
-                tags={post.data.tags}
-                image={post.data.image}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
+  <Hero
+    eyebrow="★ TECH SEMINAR · 24.05.2026 · FPT ĐÀ NẴNG"
+    titleLine1="JUST SHIP."
+    titleLine2="VIBE CODING."
+    subtitle="FROM PROMPT TO PRODUCTION"
+    paragraph="<strong>2 tiếng. 3 engineer. 1 chủ đề không hype.</strong> Code cùng AI mà vẫn cầm trịch production — từ prompt đầu tiên đến lúc <strong>deploy</strong> chạy xanh."
+    meta={heroMeta}
+    ticketTitle="Vibe Coding 2026"
+    ticketStrip="★ ADMIT ONE · ID e9009c0f"
+    ticketRows={ticketRows}
+    countdownTo="2026-05-24T14:00:00+07:00"
+  />
+
+  <ChapterMark text="Giới thiệu" />
+
+  <AboutSection
+    id="about"
+    num="01 · GIỚI THIỆU"
+    title="TẠI SAO <span class='red'>ĐÁNG</span> ĐẾN"
+    description="Không slide marketing. Không hô khẩu hiệu. 3 engineer, 3 talk, 1 chủ đề thật."
+    quote="PROMPT LÀ <span class='yel'>DỄ</span>. SHIP MỚI <span class='yel'>KHÓ</span>."
+    quoteAttribution="— VIBE CODING 2026 · TECH SEMINAR"
+    bodyTitle="AI VIẾT CODE. <span class='red'>BẠN</span> GIỮ <span class='yel-bg'>TAY LÁI</span>."
+    body="<strong>Vibe Coding</strong> là tech seminar 2 tiếng tại lab AIT, FPT Đà Nẵng. 1 chủ đề duy nhất: code cùng AI mà vẫn cầm trịch được <strong>production</strong> — không bị agent dắt mũi."
+    takeaways={takeaways}
+  />
+
+  <ChapterMark text="Diễn giả" side="left" arrow="↓ NEXT" />
+
+  <SpeakersSection
+    id="speakers"
+    num="02 · NGƯỜI CHIA SẺ"
+    title="3 <span class='red'>DIỄN GIẢ</span>"
+    description="Đang làm prod thật. Không hô khẩu hiệu, không thuyết âm mưu, không bán khoá học."
+    speakers={speakers}
+  />
+
+  <ChapterMark text="Lịch trình" />
+
+  <AgendaSection
+    id="agenda"
+    num="03 · LỊCH TRÌNH"
+    title="2 TIẾNG · <span class='acc'>6</span> KHÚC"
+    description="14:00 → 16:00. Khung giờ flex được nhưng đừng trễ check-in — BTC sẽ buồn."
+    items={agenda}
+  />
+
+  <ChapterMark text="Đăng ký" arrow="↓ FORM" side="left" />
+
+  <RegisterSection
+    id="register"
+    title="VÀO LÀ <span class='red'>XONG</span>.<br>SUẤT KHÔNG <span class='red'>VÔ HẠN</span>."
+    description="Điền 4 ô — mất 30 giây. Lab có giới hạn, đến sớm chọn chỗ tốt."
+    eventCode="e9009c0f-2b16-4f71-9dc6-020be6a1ac40"
+  />
 </PageLayout>

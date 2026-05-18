@@ -1,0 +1,179 @@
+---
+interface Props {
+  id?: string
+  kicker?: string
+  title: string
+  description?: string
+  submitLabel?: string
+  eventCode?: string
+  action?: string
+}
+
+const {
+  id = 'register',
+  kicker = '★ GIỮ CHỖ TRƯỚC ★',
+  title,
+  description,
+  submitLabel = 'GIỮ CHỖ NGAY ↗',
+  eventCode,
+  action,
+} = Astro.props
+---
+
+<section id={id} class="reg-wrap">
+  <div class="reg-inner">
+    <div class="reg-head">
+      <div class="kicker">{kicker}</div>
+      <h2 set:html={title} />
+      {description && <p>{description}</p>}
+    </div>
+
+    <form class="reg-form" id="regForm" novalidate action={action} method="post">
+      <div class="row2">
+        <div class="field">
+          <label for="f-name">Họ và tên<span class="req">*</span></label>
+          <input id="f-name" name="fullname" type="text" placeholder="Nguyễn Văn A" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="f-email">Email<span class="req">*</span></label>
+          <input id="f-email" name="email" type="email" placeholder="your@email.com" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="f-phone">Số điện thoại<span class="req">*</span></label>
+          <input id="f-phone" name="phone" type="tel" placeholder="0xx xxx xxxx" required autocomplete="tel" inputmode="tel" />
+          <div class="field-hint">Nhắc lịch 1 ngày trước event.</div>
+        </div>
+        <div class="field">
+          <label for="f-org">Trường / Công ty<span class="req">*</span></label>
+          <input id="f-org" name="org" type="text" placeholder="VD: Đại học X / Công ty Y" required autocomplete="organization" />
+        </div>
+      </div>
+
+      <div class="row1">
+        <div class="field">
+          <label for="f-q">Câu hỏi cho speaker <span class="opt">(không bắt buộc)</span></label>
+          <textarea id="f-q" name="question" placeholder="VD: Bạn xử lý như thế nào khi gặp tình huống X?"></textarea>
+          <div class="field-hint">Câu hay sẽ được ưu tiên lên ghế nóng Q&amp;A.</div>
+        </div>
+      </div>
+
+      <label class="cb">
+        <input type="checkbox" name="consent" checked required />
+        <span>Tôi đồng ý nhận thông báo nhắc lịch qua email/SĐT. Không spam, không bán dữ liệu.</span>
+      </label>
+
+      <div class="reg-submit">
+        {eventCode && <div class="note">★ MÃ EVENT · {eventCode}</div>}
+        <button class="btn btn-paper btn-lg" type="submit">{submitLabel}</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  @reference '@/styles/global.css';
+  .reg-wrap {
+    @apply py-24 px-6;
+    background:
+      radial-gradient(circle, var(--dp-red) 1.2px, transparent 1.5px) 0 0 / 10px 10px,
+      var(--dp-cream);
+    border-top: 6px solid var(--dp-black);
+    border-bottom: 6px solid var(--dp-black);
+  }
+  .reg-inner { max-width: var(--w-card); @apply mx-auto grid gap-8; }
+  .reg-head { @apply text-center; }
+  .reg-head .kicker {
+    @apply inline-block font-mono font-semibold uppercase px-3 py-1;
+    background: var(--dp-black); color: var(--dp-paper);
+    letter-spacing: 3px; font-size: 12px;
+    margin-bottom: 16px;
+  }
+  .reg-head h2 {
+    @apply font-display uppercase mb-3;
+    font-size: clamp(36px, 6vw, 64px); line-height: 0.95;
+  }
+  .reg-head h2 .red { @apply text-dp-red; }
+  .reg-head p { @apply font-hand text-xl text-dp-black; }
+
+  .reg-form {
+    @apply bg-dp-black text-dp-paper p-8 px-6;
+    border: 4px solid var(--dp-black);
+    box-shadow: var(--shadow-dp-xl-red);
+  }
+  .reg-form .row2 {
+    @apply grid gap-4 mb-4;
+    grid-template-columns: 1fr 1fr;
+  }
+  .reg-form .row1 { @apply mb-4; }
+  .field label {
+    @apply block font-sans text-[13px] font-bold text-dp-paper mb-2;
+  }
+  .field label .req { @apply text-dp-red-soft ml-0.5; }
+  .field label .opt { @apply font-normal text-[11px] text-dp-paper opacity-55; }
+  .field input,
+  .field textarea,
+  .field select {
+    @apply w-full font-sans text-sm p-3 bg-dp-paper text-dp-black;
+    border: 3px solid var(--dp-paper);
+    box-shadow: var(--shadow-dp-sm-red);
+    transition: transform var(--dur-fast) ease-out, box-shadow var(--dur-fast) ease-out;
+  }
+  .field textarea { min-height: 110px; resize: vertical; }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    @apply outline-none;
+    box-shadow: var(--shadow-dp-md);
+    transform: translate(-1px, -1px);
+    border-color: var(--dp-red);
+  }
+  .field-hint { @apply font-sans text-xs italic text-dp-paper opacity-65 mt-1; }
+  .cb {
+    @apply flex items-start gap-2 cursor-pointer text-[13px] text-dp-paper mb-4 font-sans;
+    line-height: 1.4;
+  }
+  .cb input {
+    appearance: none;
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+    background: var(--dp-black);
+    border: 2.5px solid var(--dp-paper);
+    cursor: pointer; position: relative;
+  }
+  .cb input:checked { background: var(--dp-red); border-color: var(--dp-red); }
+  .cb input:checked::after {
+    content: ''; position: absolute; left: 50%; top: 45%;
+    width: 4px; height: 8px;
+    border-right: 2.5px solid var(--dp-paper);
+    border-bottom: 2.5px solid var(--dp-paper);
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .reg-submit {
+    @apply flex justify-between items-center gap-4 flex-wrap pt-4;
+    border-top: 2px solid var(--dp-paper);
+  }
+  .reg-submit .note {
+    @apply font-mono font-semibold text-[11px] tracking-[1px] text-dp-red-soft;
+  }
+
+  /* Submit button — only used here */
+  .btn {
+    @apply inline-flex items-center gap-2 font-display text-[13px] tracking-[1px] uppercase cursor-pointer no-underline py-3 px-6 bg-dp-yellow text-dp-black;
+    border: 3px solid var(--dp-black);
+    box-shadow: 5px 5px 0 var(--dp-black);
+    transition: transform var(--dur-fast) ease-out, box-shadow var(--dur-fast) ease-out;
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--dp-black); }
+  .btn:active { transform: translate(3px, 3px); box-shadow: none; }
+  .btn-paper { box-shadow: 5px 5px 0 var(--dp-red); }
+  .btn-paper:hover { box-shadow: 7px 7px 0 var(--dp-red); }
+  .btn-paper:active { box-shadow: 1px 1px 0 var(--dp-red); }
+  .btn-lg { @apply text-[15px] py-4 px-8; }
+
+  @media (max-width: 1023px) {
+    .reg-wrap { @apply px-6 py-12; }
+    .reg-form .row2 { grid-template-columns: 1fr; }
+  }
+</style>
