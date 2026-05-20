@@ -33,6 +33,8 @@ const buttonVariants = cva(
 
 interface Props extends VariantProps<typeof buttonVariants> {
   href?: string
+  target?: '_blank' | '_self' | '_parent' | '_top'
+  rel?: string
   type?: 'button' | 'submit' | 'reset'
   name?: string
   value?: string
@@ -46,6 +48,8 @@ interface Props extends VariantProps<typeof buttonVariants> {
 
 const {
   href,
+  target,
+  rel,
   type = 'button',
   name,
   value,
@@ -61,8 +65,9 @@ const {
 
 const isDisabled = disabled || loading
 const Tag = href ? 'a' : 'button'
+const resolvedRel = href && target === '_blank' ? (rel ?? 'noopener noreferrer') : rel
 const tagProps = href
-  ? { href, 'aria-disabled': isDisabled || undefined }
+  ? { href, target, rel: resolvedRel, 'aria-disabled': isDisabled || undefined }
   : { type, name, value, form, disabled: isDisabled }
 ---
 

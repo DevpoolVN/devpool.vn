@@ -1,10 +1,9 @@
 ---
 import Button from '@/core/components/Button.astro'
-import Checkbox from '@/core/components/Checkbox.astro'
 import Container from '@/core/components/Container.astro'
 import { EVENT } from '../../data/event'
 
-import FormField from './FormField.astro'
+const REGISTER_URL = 'https://forms.gle/G97AaQx26AHMsBnDA'
 ---
 
 <section
@@ -20,63 +19,19 @@ import FormField from './FormField.astro'
         VÀO LÀ <span class="text-dp-red">XONG</span>.<br />
         SUẤT KHÔNG <span class="text-dp-red">VÔ HẠN</span>.
       </h2>
-      <p class="font-hand text-dp-lg text-dp-black">Điền 4 ô — mất 30 giây. Lab có giới hạn, đến sớm chọn chỗ tốt.</p>
+      <p class="font-hand text-dp-lg text-dp-black">Điền form Google — mất 30 giây. Lab có giới hạn, đến sớm chọn chỗ tốt.</p>
     </header>
 
-    <form
-      id="regForm"
-      novalidate
-      method="post"
-      class="dp-card-featured p-8 px-6 space-y-4"
-    >
-      <div class="grid gap-4 grid-cols-1 lg:grid-cols-2">
-        <FormField id="f-name" name="fullname" label="Họ và tên" placeholder="Nguyễn Văn A" required autocomplete="name" />
-        <FormField id="f-email" name="email" type="email" label="Email" placeholder="your@email.com" required autocomplete="email" />
+    <div class="dp-card-featured p-8 px-6 grid gap-6 justify-items-center text-center">
+      <p class="font-hand text-dp-md text-dp-black max-w-md">
+        Bấm nút bên dưới để mở form đăng ký. Tụi mình sẽ gửi xác nhận qua email sau khi nhận được thông tin.
+      </p>
+
+      <Button href={REGISTER_URL} target="_blank" size="lg" arrow>GIỮ CHỖ NGAY</Button>
+
+      <div class="dp-label-mono tracking-dp-tight text-dp-sm text-dp-red-soft pt-4 border-t-2 border-dp-paper w-full">
+        ★ MÃ EVENT · {EVENT.code}
       </div>
-
-      <div class="grid gap-4 grid-cols-1 lg:grid-cols-2">
-        <FormField
-          id="f-phone"
-          name="phone"
-          type="tel"
-          label="Số điện thoại"
-          placeholder="0xx xxx xxxx"
-          required
-          autocomplete="tel"
-          inputmode="tel"
-          hint="Nhắc lịch 1 ngày trước event."
-        />
-        <FormField
-          id="f-org"
-          name="org"
-          label="Trường / Công ty"
-          placeholder="VD: Đại học X / Công ty Y"
-          required
-          autocomplete="organization"
-        />
-      </div>
-
-      <FormField
-        id="f-q"
-        name="question"
-        type="textarea"
-        label="Câu hỏi cho speaker"
-        placeholder="VD: Bạn xử lý như thế nào khi gặp tình huống X?"
-        optional
-        hint="Câu hay sẽ được ưu tiên lên ghế nóng Q&amp;A."
-      />
-
-      <label class="inline-flex items-start gap-3 min-h-11 py-2.75 cursor-pointer text-dp-base leading-snug">
-        <Checkbox name="consent" checked required />
-        Tôi đồng ý nhận thông báo nhắc lịch qua email/SĐT. Không spam, không bán dữ liệu.
-      </label>
-
-      <div class="flex justify-between items-center gap-4 flex-wrap pt-4 border-t-2 border-dp-paper">
-        <div class="dp-label-mono tracking-dp-tight text-dp-sm text-dp-red-soft">
-          ★ MÃ EVENT · {EVENT.code}
-        </div>
-        <Button type="submit" size="lg">GIỮ CHỖ NGAY ↗</Button>
-      </div>
-    </form>
+    </div>
   </Container>
 </section>
