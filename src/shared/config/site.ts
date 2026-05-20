@@ -14,6 +14,5 @@ export const NAV = [
 
 export const CTA = {
   label: 'ĐĂNG KÝ NGAY',
-  href: 'https://forms.gle/G97AaQx26AHMsBnDA',
-  external: true,
+  href: '#register',
 } as const
