@@ -1,0 +1,37 @@
+---
+import Button from '@/core/components/Button.astro'
+import Container from '@/core/components/Container.astro'
+import { EVENT } from '../../data/event'
+
+const REGISTER_URL = 'https://forms.gle/G97AaQx26AHMsBnDA'
+---
+
+<section
+  id="register"
+  class="dp-section border-y-[6px] border-dp-black bg-dp-cream bg-[radial-gradient(circle,theme(--color-dp-red)_1.2px,transparent_1.5px)] bg-[size:10px_10px]"
+>
+  <Container size="narrow" class="grid gap-8">
+    <header class="text-center">
+      <div class="dp-label-mono tracking-dp-extra inline-block bg-dp-black text-dp-paper px-3 py-1 mb-4 text-dp-sm">
+        ★ GIỮ CHỖ TRƯỚC ★
+      </div>
+      <h2 class="dp-heading-display mb-3 text-[clamp(36px,6vw,64px)] leading-[0.95]">
+        VÀO LÀ <span class="text-dp-red">XONG</span>.<br />
+        SUẤT KHÔNG <span class="text-dp-red">VÔ HẠN</span>.
+      </h2>
+      <p class="font-hand text-dp-lg text-dp-black">Điền form Google — mất 30 giây. Lab có giới hạn, đến sớm chọn chỗ tốt.</p>
+    </header>
+
+    <div class="dp-card-featured p-8 px-6 grid gap-6 justify-items-center text-center">
+      <p class="font-hand text-dp-md text-dp-black max-w-md">
+        Bấm nút bên dưới để mở form đăng ký. Tụi mình sẽ gửi xác nhận qua email sau khi nhận được thông tin.
+      </p>
+
+      <Button href={REGISTER_URL} target="_blank" size="lg" arrow>GIỮ CHỖ NGAY</Button>
+
+      <div class="dp-label-mono tracking-dp-tight text-dp-sm text-dp-red-soft pt-4 border-t-2 border-dp-paper w-full">
+        ★ MÃ EVENT · {EVENT.code}
+      </div>
+    </div>
+  </Container>
+</section>

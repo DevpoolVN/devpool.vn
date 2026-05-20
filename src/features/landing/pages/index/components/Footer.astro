@@ -1,0 +1,71 @@
+---
+import Container from '@/core/components/Container.astro'
+import { SITE } from '@/shared/config/site'
+
+const currentYear = new Date().getFullYear()
+const arrowOut = 'mr-2 select-none text-dp-paper-soft'
+const ftKey = 'text-dp-yellow mr-2 inline-block min-w-20 lg:min-w-0 lg:inline'
+const codeStyle = 'font-mono px-1 bg-dp-paper-faint'
+const dividerStyle = 'select-none overflow-hidden my-4 whitespace-nowrap text-dp-paper-soft'
+---
+
+<footer class="bg-dp-black text-dp-paper relative overflow-hidden border-t-[6px] border-dp-red">
+  <Container size="narrow" as="div" class="dp-section font-mono font-semibold text-dp-sm leading-dp-loose lg:text-dp-base">
+    <div role="contentinfo">
+      <div>
+        <span class="text-dp-red-soft mr-2 select-none">$</span>
+        <span class="text-dp-paper">devpool seminar register <span class="text-dp-yellow">--event</span> vibe-coding-2026</span>
+      </div>
+
+      <div class={dividerStyle}>// ────── event metadata ──────────────────────────────────</div>
+
+      <div>
+        <span class={arrowOut}>→</span>
+        <span class={ftKey}>name      </span>
+        <span class="text-dp-paper">"Vibe Coding: From Prompt to Production"</span>
+      </div>
+      <div>
+        <span class={arrowOut}>→</span>
+        <span class={ftKey}>when      </span>
+        <span class="text-dp-paper">Sun, 2026-05-24 · 14:00 GMT+7</span>
+      </div>
+      <div>
+        <span class={arrowOut}>→</span>
+        <span class={ftKey}>where     </span>
+        <span class="text-dp-paper">Gamma 101 · FPT Đà Nẵng (Ngũ Hành Sơn)</span>
+      </div>
+      <div>
+        <span class={arrowOut}>→</span>
+        <span class={ftKey}>speakers  </span>
+        <span class="text-dp-paper">3 engineers · AxonActive × Enosta</span>
+      </div>
+      <div>
+        <span class={arrowOut}>→</span>
+        <span class={ftKey}>price     </span>
+        <span class="text-dp-paper">
+          <code class={codeStyle}>0₫</code> · 100% free
+        </span>
+      </div>
+      <div class="text-dp-red-soft">
+        <span class={arrowOut}>!</span>
+        <span class="text-dp-paper">limited seats · run <code class={codeStyle}>./register</code> while you can</span>
+      </div>
+
+      <a
+        href="#register"
+        class="block my-6 py-3 px-4 no-underline text-dp-paper transition-[background-color,border-color] duration-150 border-l-[3px] border-dp-red
+               bg-dp-paper-faint hover:border-l-dp-yellow"
+      >
+        <span class="text-dp-red-soft mr-2 select-none">$</span>
+        <span class="text-dp-yellow font-semibold">./register-now</span>
+        <span class="inline-block bg-dp-yellow w-2 align-text-bottom ml-1 h-[1em]"></span>
+      </a>
+
+      <div class={dividerStyle}>// ────── ////////////////////// ──────────────────────────</div>
+
+      <div class="italic text-dp-paper-soft [&_a]:no-underline [&_a]:transition-colors [&_a]:border-b [&_a]:border-dotted [&_a]:text-dp-paper-strong [&_a:hover]:text-dp-yellow">
+        // © {currentYear} {SITE.title} · #VibeCoding2026 · <a href="#top">scroll_to_top()</a>
+      </div>
+    </div>
+  </Container>
+</footer>

@@ -1,0 +1,68 @@
+/* Component-level classes extracted from repeated Tailwind patterns.
+   Naming: `dp-*` prefix mirrors brand tokens for grep-ability. */
+
+@layer components {
+  /* Vertical rhythm cho landing sections — replaces `py-12 lg:py-24` (6 usages) */
+  .dp-section {
+    @apply py-12 lg:py-24;
+  }
+
+  /* Mono caps label — JetBrains Mono semibold + uppercase, default tracking-dp-mono.
+     Override bằng `dp-label-mono tracking-dp-{tight,wide,extra}` khi cần spec khác. */
+  .dp-label-mono {
+    @apply font-mono font-semibold uppercase tracking-dp-mono;
+  }
+
+  /* Impact label — sans-serif Black caps, vault Typography 02. Badge + Button base. */
+  .dp-label-impact {
+    @apply font-sans font-black uppercase tracking-dp-tight;
+  }
+
+  /* Display heading — Bungee caps. Default leading 1.2; caller có thể override. */
+  .dp-heading-display {
+    @apply font-display uppercase leading-dp-heading;
+  }
+
+  /* Utility heading — Anton caps + nhẹ tracking. Subhead / list-title. */
+  .dp-heading-utility {
+    @apply font-utility font-normal uppercase tracking-[0.5px];
+  }
+
+  /* Description copy on light surfaces — small dim body */
+  .dp-desc {
+    @apply text-dp-base leading-dp-body text-dp-dim;
+  }
+
+  /* Brand black borders — brutalist outline ở 2 độ dày phổ biến */
+  .dp-bordered {
+    @apply border-[3px] border-dp-black;
+  }
+  .dp-bordered-sm {
+    @apply border-[2.5px] border-dp-black;
+  }
+
+  /* Tactile press transition — pair với hover:-translate-* / hover:shadow-* */
+  .dp-press {
+    @apply transition-[transform,box-shadow] duration-fast ease-out;
+  }
+
+  /* Form control base — Input + Textarea share this surface + focus mechanic */
+  .dp-control {
+    @apply w-full p-3 font-sans text-dp-base bg-dp-paper text-dp-black
+           border-[3px] border-dp-black shadow-dp-sm
+           transition-[transform,box-shadow] duration-fast ease-out
+           focus:outline-none focus:border-dp-red focus:shadow-dp-sm-red
+           focus:-translate-x-px focus:-translate-y-px
+           disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  /* Error state — red border + shadow regardless of focus */
+  .dp-control-error {
+    @apply border-dp-red shadow-dp-sm-red focus:border-dp-red focus:shadow-dp-sm-red;
+  }
+
+  /* Featured dark callout — About quote, Register form wrapper */
+  .dp-card-featured {
+    @apply bg-dp-black text-dp-paper border-4 border-dp-black shadow-dp-xl-red;
+  }
+}

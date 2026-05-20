@@ -2381,39 +2381,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astrolabe@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "astrolabe@workspace:."
-  dependencies:
-    "@astrojs/rss": "npm:^4.0.18"
-    "@astrojs/sitemap": "npm:^3.7.2"
-    "@cloudflare/workers-types": "npm:^4.20260124.0"
-    "@eslint/compat": "npm:^2"
-    "@eslint/js": "npm:^10"
-    "@iconify-json/lucide": "npm:^1.2.108"
-    "@tailwindcss/typography": "npm:^0.5.19"
-    "@tailwindcss/vite": "npm:^4.3.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8"
-    "@typescript-eslint/parser": "npm:^8"
-    astro: "npm:^6.3.3"
-    astro-icon: "npm:^1.1.5"
-    astro-seo: "npm:^1.1.0"
-    eslint: "npm:^10"
-    eslint-config-prettier: "npm:^10"
-    eslint-plugin-astro: "npm:^1"
-    eslint-plugin-prettier: "npm:^5"
-    eslint-plugin-simple-import-sort: "npm:^13"
-    globals: "npm:^17"
-    prettier: "npm:^3.8.3"
-    prettier-plugin-astro: "npm:^0.14.1"
-    prettier-plugin-sort-json: "npm:^4.2.0"
-    prettier-plugin-tailwindcss: "npm:^0.8.0"
-    tailwindcss: "npm:^4.3.0"
-    typescript: "npm:^6"
-    wrangler: "npm:^4.92.0"
-  languageName: unknown
-  linkType: soft
-
 "axobject-query@npm:^4.1.0":
   version: 4.1.0
   resolution: "axobject-query@npm:4.1.0"
@@ -2564,6 +2531,22 @@ __metadata:
   version: 4.4.0
   resolution: "ci-info@npm:4.4.0"
   checksum: 10c0/44156201545b8dde01aa8a09ee2fe9fc7a73b1bef9adbd4606c9f61c8caeeb73fb7a575c88b0443f7b4edb5ee45debaa59ed54ba5f99698339393ca01349eb3a
+  languageName: node
+  linkType: hard
+
+"class-variance-authority@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "class-variance-authority@npm:0.7.1"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  checksum: 10c0/0f438cea22131808b99272de0fa933c2532d5659773bfec0c583de7b3f038378996d3350683426b8e9c74a6286699382106d71fbec52f0dd5fbb191792cccb5b
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "classnames@npm:2.5.1"
+  checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
   languageName: node
   linkType: hard
 
@@ -2816,6 +2799,41 @@ __metadata:
   checksum: 10c0/e0928ab8f94c59417a2b8389c45c55ce0a02d9ac7fd74ef62d01ba48060129e1d594501b77de01f3eeafc7cb00773819b0df74d96251cf20b31c5b3071f45c0e
   languageName: node
   linkType: hard
+
+"devpool@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "devpool@workspace:."
+  dependencies:
+    "@astrojs/rss": "npm:^4.0.18"
+    "@astrojs/sitemap": "npm:^3.7.2"
+    "@cloudflare/workers-types": "npm:^4.20260124.0"
+    "@eslint/compat": "npm:^2"
+    "@eslint/js": "npm:^10"
+    "@iconify-json/lucide": "npm:^1.2.108"
+    "@tailwindcss/typography": "npm:^0.5.19"
+    "@tailwindcss/vite": "npm:^4.3.0"
+    "@typescript-eslint/eslint-plugin": "npm:^8"
+    "@typescript-eslint/parser": "npm:^8"
+    astro: "npm:^6.3.3"
+    astro-icon: "npm:^1.1.5"
+    astro-seo: "npm:^1.1.0"
+    class-variance-authority: "npm:^0.7.1"
+    classnames: "npm:^2.5.1"
+    eslint: "npm:^10"
+    eslint-config-prettier: "npm:^10"
+    eslint-plugin-astro: "npm:^1"
+    eslint-plugin-prettier: "npm:^5"
+    eslint-plugin-simple-import-sort: "npm:^13"
+    globals: "npm:^17"
+    prettier: "npm:^3.8.3"
+    prettier-plugin-astro: "npm:^0.14.1"
+    prettier-plugin-sort-json: "npm:^4.2.0"
+    prettier-plugin-tailwindcss: "npm:^0.8.0"
+    tailwindcss: "npm:^4.3.0"
+    typescript: "npm:^6"
+    wrangler: "npm:^4.92.0"
+  languageName: unknown
+  linkType: soft
 
 "diff@npm:^8.0.3":
   version: 8.0.4

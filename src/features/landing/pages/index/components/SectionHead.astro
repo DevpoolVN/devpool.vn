@@ -1,0 +1,55 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority'
+
+const numVariants = cva(
+  'dp-label-mono tracking-dp-wide block text-dp-sm mb-6',
+  {
+    variants: {
+      variant: {
+        light: 'text-dp-dim',
+        dark: 'text-dp-red-soft',
+      },
+    },
+    defaultVariants: { variant: 'light' },
+  },
+)
+
+const titleVariants = cva(
+  'dp-heading-display mb-4 text-[clamp(32px,5vw,56px)]',
+  {
+    variants: {
+      variant: {
+        light: 'text-dp-black',
+        dark: 'text-dp-paper',
+      },
+    },
+    defaultVariants: { variant: 'light' },
+  },
+)
+
+const descVariants = cva('font-hand text-dp-lg max-w-95', {
+  variants: {
+    variant: {
+      light: 'text-dp-black',
+      dark: 'text-dp-red-soft',
+    },
+  },
+  defaultVariants: { variant: 'light' },
+})
+
+interface Props extends VariantProps<typeof numVariants> {
+  num: string
+  title: string
+  description?: string
+}
+
+const { num, title, description, variant } = Astro.props
+---
+
+<div class="flex items-end justify-between flex-wrap gap-4 mb-12">
+  <div>
+    <div class={numVariants({ variant })}>{num}</div>
+    <h2 class={titleVariants({ variant })} set:html={title} />
+  </div>
+  {description && <p class={descVariants({ variant })}>{description}</p>}
+</div>

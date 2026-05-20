@@ -1,0 +1,23 @@
+---
+import Container from '@/core/components/Container.astro'
+import { speakers } from '../../data/speakers'
+
+import SectionHead from '../SectionHead.astro'
+import SpeakerCard from './SpeakerCard.astro'
+---
+
+<section
+  id="speakers"
+  class="dp-section bg-dp-cream bg-[radial-gradient(circle,theme(--color-dp-red)_1px,transparent_1.5px)] bg-[size:16px_16px]"
+>
+  <Container>
+    <SectionHead
+      num="02 · NGƯỜI CHIA SẺ"
+      title="3 <span class='text-dp-red'>DIỄN GIẢ</span>"
+      description="Đang làm prod thật. Không hô khẩu hiệu, không thuyết âm mưu, không bán khoá học."
+    />
+    <div class="grid gap-6 items-stretch grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
+      {speakers.map((s) => <SpeakerCard {...s} />)}
+    </div>
+  </Container>
+</section>

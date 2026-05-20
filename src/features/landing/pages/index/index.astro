@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@/shared/layouts/BaseLayout.astro'
+
+import About from './components/About.astro'
+import ChapterMark from './components/ChapterMark.astro'
+import Footer from './components/Footer.astro'
+import Header from './components/Header.astro'
+import Ticker from './components/Ticker.astro'
+import Agenda from './components/Agenda/Agenda.astro'
+import Hero from './components/Hero/Hero.astro'
+import Register from './components/Register/Register.astro'
+import Speakers from './components/Speakers/Speakers.astro'
+---
+
+<BaseLayout>
+  <Header />
+
+  <main class="grow">
+    <Ticker />
+    <Hero />
+
+    <ChapterMark text="Giới thiệu" />
+    <About />
+
+    <ChapterMark text="Diễn giả" side="left" arrow="↓ NEXT" />
+    <Speakers />
+
+    <ChapterMark text="Lịch trình" />
+    <Agenda />
+
+    <ChapterMark text="Đăng ký" arrow="↓ FORM" side="left" />
+    <Register />
+  </main>
+
+  <Footer />
+</BaseLayout>

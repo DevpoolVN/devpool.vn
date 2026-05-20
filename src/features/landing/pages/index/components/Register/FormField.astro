@@ -1,0 +1,66 @@
+---
+import Input from '@/core/components/Input.astro'
+import Textarea from '@/core/components/Textarea.astro'
+
+interface Props {
+  id: string
+  name: string
+  label: string
+  type?: 'text' | 'email' | 'tel' | 'password' | 'textarea'
+  placeholder?: string
+  required?: boolean
+  optional?: boolean
+  autocomplete?: string
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric' | 'decimal' | 'search' | 'url'
+  hint?: string
+  error?: string
+  optionalLabel?: string
+}
+
+const {
+  id,
+  name,
+  label,
+  type = 'text',
+  placeholder,
+  required = false,
+  optional = false,
+  autocomplete,
+  inputmode,
+  hint,
+  error,
+  optionalLabel = '(không bắt buộc)',
+} = Astro.props
+
+const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined
+const Control = type === 'textarea' ? Textarea : Input
+const controlProps = type === 'textarea' ? {} : { type, autocomplete, inputmode }
+---
+
+<div>
+  <label for={id} class="block font-sans text-dp-base font-bold text-dp-paper">
+    {label}
+    {required && <span class="text-dp-red-soft ml-0.5">*</span>}
+    {optional && <span class="font-normal text-dp-sm text-dp-paper opacity-55 ml-1">{optionalLabel}</span>}
+  </label>
+
+  <div class="mt-2">
+    <Control
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      variant={error ? 'error' : 'default'}
+      aria-describedby={describedBy}
+      aria-invalid={error ? 'true' : undefined}
+      {...controlProps}
+    />
+  </div>
+
+  {hint && !error && (
+    <p id={`${id}-hint`} class="mt-1 font-sans text-dp-sm italic text-dp-paper opacity-65">{hint}</p>
+  )}
+  {error && (
+    <p id={`${id}-error`} class="mt-1 font-sans text-dp-sm font-medium text-dp-red-soft">{error}</p>
+  )}
+</div>

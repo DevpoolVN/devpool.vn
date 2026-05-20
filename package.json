@@ -1,9 +1,9 @@
 {
-  "name": "astrolabe",
+  "name": "devpool",
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "description": "Astrolabe — a simple, lightweight markdown blog built with Astro and TailwindCSS",
+  "description": "Devpool — landing page built with Astro 6 + Tailwind v4, comic design language",
   "packageManager": "yarn@4.14.1",
   "resolutions": {
     "rolldown-vite": "npm:vite@^7",
@@ -28,6 +28,8 @@
     "astro": "^6.3.3",
     "astro-icon": "^1.1.5",
     "astro-seo": "^1.1.0",
+    "class-variance-authority": "^0.7.1",
+    "classnames": "^2.5.1",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {

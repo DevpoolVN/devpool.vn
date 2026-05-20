@@ -1,0 +1,50 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { cn } from '@/core/utils/cn'
+
+/**
+ * Badge — static status/label per Devpool Design vault.
+ * Spec: Design/components/badge.md
+ *
+ * - Padding: --s-1 --s-2 (4px 8px)
+ * - Border: 2.5px solid --dp-black (mandatory)
+ * - Typography: 02 · IMPACT (Be Vietnam Pro Black, 11px uppercase, letter-spacing 1px, weight 900)
+ * - Outline variant: text inherits parent color (vault: "contrast theo container nền")
+ */
+const badgeVariants = cva(
+  'dp-bordered-sm dp-label-impact inline-block px-2 py-1 text-dp-sm leading-normal',
+  {
+    variants: {
+      variant: {
+        default: 'bg-dp-yellow text-dp-black',
+        red: 'bg-dp-red text-dp-paper',
+        dark: 'bg-dp-black text-dp-paper',
+        outline: 'bg-transparent text-current',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+)
+
+interface Props extends VariantProps<typeof badgeVariants> {
+  as?: 'span' | 'div'
+  id?: string
+  'aria-label'?: string
+  class?: string
+}
+
+const {
+  as: Tag = 'span',
+  id,
+  variant,
+  'aria-label': ariaLabel,
+  class: className,
+} = Astro.props
+---
+
+<Tag id={id} aria-label={ariaLabel} class={cn(badgeVariants({ variant, className }))}>
+  <slot />
+</Tag>
